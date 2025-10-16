@@ -1,5 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { commands } from './commands';
+import { filesystem } from './utils/filesystem';
+import { getDirectoryByPath } from './utils/pathHelper';
+
 import './App.css';
 
 const welcomeMessage = [
@@ -12,7 +15,10 @@ const welcomeMessage = [
 export default function App() {
   const [history, setHistory] = useState(welcomeMessage);
   const [command, setCommand] = useState('');
+  const [path, setPath] = useState('~');
+
   const terminalRef = useRef(null);
+  const inputRef = useRef(null);
 
   useEffect(() => {
     if (terminalRef.current) {
@@ -21,33 +27,37 @@ export default function App() {
   }, [history]);
 
   const handleCommand = (cmdStr) => {
-    let newHistory = [...history, `<span class="prompt">&gt;</span> ${cmdStr}`];
-    
+    const prompt = `<span class="prompt">${path} &gt;</span>`;
+    let newHistory = [...history, `${prompt} ${cmdStr}`];
+
     const parts = cmdStr.trim().split(' ');
     const cmdName = parts[0].toLowerCase();
     const args = parts.slice(1);
+    const currentDirectory = getDirectoryByPath(filesystem, path);
+
+    const context = { path, currentDirectory, filesystem };
 
     if (cmdName in commands) {
       const commandToExecute = commands[cmdName];
-      // Komutun .execute fonksiyonunu çalıştırıyoruz.
-      // 'help' gibi ihtiyaç duyan komutlar için tüm komut listesini de gönderiyoruz.
-      const result = commandToExecute.execute(args, commands);
+      const result = commandToExecute.execute(args, commands, context);
 
       if (result?.isClear) {
         newHistory = [];
+      } else if (result?.isPathUpdate) {
+        setPath(result.newPath);
       } else if (result) {
         newHistory.push(result);
       }
     } else if (cmdName) {
       newHistory.push(`command not found: <span class="error">${cmdName}</span>`);
     }
-    
-    setHistory(newHistory);
-  };
+
+  setHistory(newHistory);
+};
 
   const handleKeyDown = (e) => {
     if (e.key === 'Enter') {
-      e.preventDefault(); // Form gönderimini veya varsayılan davranışı engelle
+      e.preventDefault();
       handleCommand(command);
       setCommand('');
     }
@@ -57,15 +67,17 @@ export default function App() {
     <div 
       className="terminal" 
       ref={terminalRef} 
-      onClick={() => document.querySelector('.input-line input')?.focus()}
-    >
+      onClick={() => inputRef.current?.focus()}
+      >
       {history.map((line, index) => (
         <div key={index} dangerouslySetInnerHTML={{ __html: line }} />
       ))}
       
       <div className="input-line">
-        <span className="prompt">&gt;</span>
+        <span 
+        className="prompt">{path} &gt;</span>
         <input
+          ref={inputRef}
           type="text"
           value={command}
           onChange={(e) => setCommand(e.target.value)}

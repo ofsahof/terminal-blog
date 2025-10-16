@@ -39,8 +39,24 @@
 
 .help-grid {
   display: grid;
-  grid-template-columns: 150px 1fr;
+  grid-template-columns: 150px 1fr; 
   gap: 5px 15px;
   margin-top: 10px;
   margin-bottom: 10px;
+}
+
+.directory {
+  color: var(--blue);
+  font-weight: bold;
+}
+
+.file {
+  color: var(--fg); 
+}
+
+pre {
+  margin: 0;
+  font-family: inherit;
+  font-size: inherit;
+  white-space: pre-wrap;
 }
