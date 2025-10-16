@@ -66,3 +66,8 @@ pre {
 .man-section { color: var(--green); margin-top: 15px; margin-bottom: 5px; }
 .man-grid { display: grid; grid-template-columns: 100px 1fr; }
 .man-page a { color: var(--aqua); text-decoration: underline; }
+
+.neofetch-container { display: flex; flex-direction: column; }
+.neofetch-container > div { display: flex; align-items: center; white-space: pre; }
+.neofetch-logo { color: var(--blue); }
+.neofetch-key { color: var(--green); font-weight: bold; }

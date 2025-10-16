@@ -11,6 +11,28 @@ body.theme-gruvbox {
   --orange: #e78a4e;
 }
 
+body.theme-solarized {
+  --bg: #002b36;
+  --fg: #839496;
+  --red: #dc322f;
+  --green: #859900;
+  --yellow: #b58900;
+  --blue: #268bd2;
+  --purple: #d33682;
+  --aqua: #2aa198;
+}
+
+body.theme-dracula {
+  --bg: #282a36;
+  --fg: #f8f822;
+  --red: #ff5555;
+  --green: #50fa7b;
+  --yellow: #f1fa8c;
+  --blue: #bd93f9;
+  --purple: #ff79c6;
+  --aqua: #8be9fd;
+}
+
 body {
   margin: 0;
   background-color: var(--bg);

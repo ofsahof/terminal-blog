@@ -14,7 +14,6 @@ export default {
     if (manPages[topic]) {
       return manPages[topic];
     }
-    return `No manual entry for ${topic}`;
-    // TODO man page list
+    return `No manual entry for ${topic}.\nAvailable: ${Object.keys(manPages).join(', ')}   `;
   },
 };

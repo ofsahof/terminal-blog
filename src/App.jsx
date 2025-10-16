@@ -26,6 +26,11 @@ export default function App() {
     }
   }, [history]);
 
+  useEffect(() => {
+    const savedTheme = localStorage.getItem('terminal-theme') || 'gruvbox';
+    document.body.className = `theme-${savedTheme}`;
+  }, []);
+
   const handleCommand = (cmdStr) => {
     const prompt = `<span class="prompt">${path} &gt;</span>`;
     let newHistory = [...history, `${prompt} ${cmdStr}`];
