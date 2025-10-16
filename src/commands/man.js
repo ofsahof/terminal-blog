@@ -1,4 +1,4 @@
-import ofsContent from '../../content/man/ofs';
+import ofsContent from '../content/man/ofs';
 
 const manPages = {
   'ofs': ofsContent,

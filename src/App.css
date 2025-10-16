@@ -71,3 +71,34 @@ pre {
 .neofetch-container > div { display: flex; align-items: center; white-space: pre; }
 .neofetch-logo { color: var(--blue); }
 .neofetch-key { color: var(--green); font-weight: bold; }
+
+.fake-input {
+  display: flex;
+  align-items: center;
+}
+.cursor {
+  background-color: var(--fg);
+  width: 9px; 
+  height: 1.2rem; 
+  margin-left: 2px;
+  animation: blink 1s step-end infinite;
+}
+@keyframes blink {
+  from, to { background-color: transparent; }
+  50% { background-color: var(--fg); }
+}
+
+.hidden-input {
+  opacity: 0;
+  position: absolute;
+  width: 0;
+  height: 0;
+}
+
+
+.welcome-art {
+  color: var(--green);
+  margin: 0;
+  line-height: 1.2;
+  margin-bottom: 10px;
+}

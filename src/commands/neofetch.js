@@ -1,4 +1,4 @@
-import { ascii, info } from '../../content/neofetch';
+import { ascii, info } from '../content/neofetch';
 
 export default {
   name: 'neofetch',
