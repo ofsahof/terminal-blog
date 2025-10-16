@@ -1,8 +1,8 @@
 export default {
   name: 'clear',
-  description: 'Clear the terminal screen.',
-  
+  description: 'Clear the terminal screen with an animation.',
   execute: (args) => {
-    return { isClear: true };
+    // App.jsx'in anlayacağı yeni bir sinyal objesi döndürüyoruz.
+    return { isAnimatedClear: true };
   },
 };

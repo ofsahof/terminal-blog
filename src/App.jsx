@@ -49,8 +49,16 @@ export default function App() {
       const commandToExecute = commands[cmdName];
       const result = commandToExecute.execute(args, commands, context);
 
-      if (result?.isClear) {
-        newHistory = [];
+      if (result?.isAnimatedClear) {
+        const terminal = terminalRef.current;
+        if (terminal) {
+          terminal.classList.add('clearing');
+          setTimeout(() => {
+            setHistory([]);
+            terminal.classList.remove('clearing');
+          }, 400);
+        }
+   
       } else if (result?.isPathUpdate) {
         setPath(result.newPath);
       } else if (result) {
@@ -78,7 +86,32 @@ export default function App() {
       const newIndex = Math.max(historyIndex - 1, -1);
       setHistoryIndex(newIndex);
       setCommand(commandHistory[newIndex] || '');
-    } else if (e.key === 'Enter') {
+    } 
+    else if (e.key === 'Tab') {
+      e.preventDefault();
+
+      const parts = command.trim().split(' ');
+      const currentWord = parts[parts.length - 1];
+
+      let suggestions = [];
+
+      if (parts.length === 1) {
+        suggestions = Object.keys(commands).filter(cmd => cmd.startsWith(currentWord));
+      } else {
+        const currentDir = getDirectoryByPath(filesystem, path);
+        suggestions = Object.keys(currentDir.children).filter(file => file.startsWith(currentWord));
+      }
+
+      if (suggestions.length === 1) {
+        const newCommand = [...parts.slice(0, -1), suggestions[0]].join(' ');
+        setCommand(newCommand + ' ');
+      } else if (suggestions.length > 1) {
+         const prompt = `<span class="prompt">${path} &gt;</span>`;
+         const newHistory = [...history, `${prompt} ${command}`, suggestions.join('  ')];
+         setHistory(newHistory);
+      }
+    }
+      else if (e.key === 'Enter') {
       e.preventDefault();
       handleCommand(command);
       setCommand('');
