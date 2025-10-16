@@ -60,3 +60,9 @@ pre {
   font-size: inherit;
   white-space: pre-wrap;
 }
+
+.man-page { line-height: 1.5; }
+.man-header { text-align: center; margin-bottom: 20px; }
+.man-section { color: var(--green); margin-top: 15px; margin-bottom: 5px; }
+.man-grid { display: grid; grid-template-columns: 100px 1fr; }
+.man-page a { color: var(--aqua); text-decoration: underline; }
