@@ -1,0 +1,30 @@
+.terminal {
+  padding: 15px;
+  height: 100vh;
+  box-sizing: border-box;
+  overflow-y: auto;
+  line-height: 1.4;
+}
+
+.input-line {
+  display: flex;
+  align-items: center;
+}
+
+.input-line span {
+  margin-right: 8px;
+  white-space: pre;
+}
+
+.input-line input {
+  flex-grow: 1;
+  background-color: transparent;
+  border: none;
+  color: var(--fg);
+  font-family: inherit;
+  font-size: inherit;
+}
+
+.input-line input:focus {
+  outline: none;
+}
