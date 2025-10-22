@@ -4,7 +4,7 @@ import { filesystem } from '../utils/filesystem';
 import { findEntry } from '../utils/pathHelper';
 import { welcomeMessage } from "../commands/welcome";
 
-export const useTerminal = () => {
+export const useTerminal = ({onViewChange}) => {
   const [history, setHistory] = useState(welcomeMessage);
   const [command, setCommand] = useState('');
   const [path, setPath] = useState('~');
@@ -51,6 +51,10 @@ export const useTerminal = () => {
     
       } else if (result?.isPathUpdate) {
         setPath(result.newPath);
+      } else if (result?.isViewChange) {
+        if(onViewChange) {
+            onViewChange(result.newView, result.gameName);
+        }
       } else if (result) {
           newHistory.push(result);
       }

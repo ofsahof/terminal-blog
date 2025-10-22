@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useTerminal } from './hooks/useTerminal';
+import { gameRegistry } from './games';
 import './App.css';
 
 const renderHistoryLine = (line, index) => {
@@ -12,7 +13,22 @@ const renderHistoryLine = (line, index) => {
   return null;
 };
 
+
+
 export default function App() {
+  const [view, setView] = useState('terminal');
+  const [gameToLoad, setGameToLoad] = useState(null);
+
+  const handleViewChange = (newView, gameName) => {
+    setView(newView);
+    setGameToLoad(gameName);
+  };
+
+  const handleGameExit = () => {
+    setView('terminal');
+    setGameToLoad(null);
+  };
+
   const {
     history,
     path,
@@ -21,32 +37,50 @@ export default function App() {
     handleKeyDown,
     inputRef,
     terminalRef
-  } = useTerminal();
+  } = useTerminal({ onViewChange: handleViewChange });
 
-  return (
-    <div  
-      className="terminal"  
-      ref={terminalRef}  
-      onClick={() => inputRef.current?.focus()}
-    >
-      {history.map(renderHistoryLine)}
-      
-      <div className="input-line" onClick={() => inputRef.current?.focus()}>
-        <span className="prompt">{path} &gt;</span>
-        <div className="fake-input">
-          <span>{command}</span>
-          <div className="cursor"></div>
+
+  if (view === 'terminal') {
+    return (
+      <div  
+        className="terminal"  
+        ref={terminalRef}  
+        onClick={() => inputRef.current?.focus()}
+      >
+        {history.map(renderHistoryLine)}
+
+        <div className="input-line" onClick={() => inputRef.current?.focus()}>
+          <span className="prompt">{path} &gt;</span>
+          <div className="fake-input">
+            <span>{command}</span>
+            <div className="cursor"></div>
+          </div>
+          <input
+            ref={inputRef}
+            className="hidden-input"
+            type="text"
+            value={command}
+            onChange={(e) => setCommand(e.target.value)}
+            onKeyDown={handleKeyDown}
+            autoFocus
+          />
         </div>
-        <input
-          ref={inputRef}
-          className="hidden-input"
-          type="text"
-          value={command}
-          onChange={(e) => setCommand(e.target.value)}
-          onKeyDown={handleKeyDown}
-          autoFocus
-        />
       </div>
-    </div>
-  );
+    );
+  } 
+
+  else if (view === 'game') {
+    const GameComponent = gameRegistry[gameToLoad];
+
+    return GameComponent ? (
+      <GameComponent onExit={handleGameExit} />
+    ) : (
+      <div>
+        <p>Error: Game component ({gameToLoad}) not found.</p>
+        <button onClick={handleGameExit}>Back to Terminal</button>
+      </div>
+    );
+  }
+  return <div>Loading...</div>;
+
 }

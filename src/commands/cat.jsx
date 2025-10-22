@@ -1,6 +1,6 @@
 import React from 'react';
 import { filesystem } from '../utils/filesystem.js';
-import { formatOrgMode } from '../utils/formatOrgMode.js';
+import { formatOrgMode } from '../utils/formatOrgMode.jsx';
 import { resolvePath, findEntry } from '../utils/pathHelper.js';
 
 const isOrgMode = (text) => {
