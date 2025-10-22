@@ -4,8 +4,8 @@ Welcome to TerminalFolio, a personal portfolio and blog built to emulate a modul
 
 This document serves as the developer's guide to the architecture.
 
-![Demo Screenshot (OFS Terminal)](https://i.imgur.com/your-screenshot.png)
-*(Please replace this with a screenshot of your project.)*
+![Demo Screenshot (OFS Terminal)](./public/project_screenshot.png)
+
 
 ---
 

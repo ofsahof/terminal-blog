@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { commands } from '../commands';
 
 export const useTerminal = ({onViewChange, initialHistory = []}) => {
-  const [history, setHistory] = useState(welcomeMessage);
+  const [history, setHistory] = useState(initialHistory);
   const [command, setCommand] = useState('');
   const [path, setPath] = useState('~');
   const [commandHistory, setCommandHistory] = useState(initialHistory);  
