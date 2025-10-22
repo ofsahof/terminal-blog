@@ -13,8 +13,6 @@ const renderHistoryLine = (line, index) => {
   return null;
 };
 
-
-
 export default function App() {
   const [view, setView] = useState('terminal');
   const [gameToLoad, setGameToLoad] = useState(null);
