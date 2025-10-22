@@ -1,3 +1,5 @@
+import firstPost from "../content/posts/first-content"
+
 export const filesystem = {
   '~': {
     type: 'directory',
@@ -18,6 +20,10 @@ export const filesystem = {
       'blog': {
         type: 'directory',
         children: {
+          'first-post': {
+            type: 'file',
+            content: firstPost
+          }
         }
       },
     }
