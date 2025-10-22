@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useTerminal } from './hooks/useTerminal';
 import { gameRegistry } from './games';
+import { welcomeMessage } from './commands/welcome';
 import './App.css';
 
 const renderHistoryLine = (line, index) => {
@@ -35,7 +36,7 @@ export default function App() {
     handleKeyDown,
     inputRef,
     terminalRef
-  } = useTerminal({ onViewChange: handleViewChange });
+  } = useTerminal({ onViewChange: handleViewChange, initialHistory: welcomeMessage });
 
 
   if (view === 'terminal') {

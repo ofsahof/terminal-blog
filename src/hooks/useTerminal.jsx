@@ -1,12 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { commands } from '../commands';
-import { welcomeMessage } from "../commands/welcome";
 
-export const useTerminal = ({onViewChange}) => {
+export const useTerminal = ({onViewChange, initialHistory = []}) => {
   const [history, setHistory] = useState(welcomeMessage);
   const [command, setCommand] = useState('');
   const [path, setPath] = useState('~');
-  const [commandHistory, setCommandHistory] = useState([]);  
+  const [commandHistory, setCommandHistory] = useState(initialHistory);  
   const [historyIndex, setHistoryIndex] = useState(-1);
 
   const terminalRef = useRef(null);
@@ -43,7 +42,7 @@ export const useTerminal = ({onViewChange}) => {
 
 
       if (result?.isImmediateClear) {
-        setHistory(welcomeMessage); 
+        setHistory(initialHistory); 
         return;
       } 
       
