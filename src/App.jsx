@@ -2,16 +2,8 @@ import React, { useState, useEffect, useRef } from 'react';
 import { commands } from './commands';
 import { filesystem } from './utils/filesystem';
 import { getDirectoryByPath } from './utils/pathHelper';
-import { welcomeArt } from './content/ascii/welcome';
 import './App.css';
-
-const welcomeMessage = [
-  welcomeArt, // ASCII art'ımızı içeren değişkeni dizinin ilk elemanı yapıyoruz.
-  'Welcome! [Version 1.0.0]',
-  'Type "help" for a list of available commands.',
-  '--------------------------------------------------',
-  '',
-];
+import { welcomeMessage } from "./commands/welcome";
 
 export default function App() {
   const [history, setHistory] = useState(welcomeMessage);
@@ -62,7 +54,7 @@ export default function App() {
       } else if (result?.isPathUpdate) {
         setPath(result.newPath);
       } else if (result) {
-        newHistory.push(result);
+          newHistory.push(result);
       }
     } else if (cmdName) {
       newHistory.push(`command not found: <span class="error">${cmdName}</span>`);
@@ -93,6 +85,7 @@ export default function App() {
       const parts = command.trim().split(' ');
       const currentWord = parts[parts.length - 1];
 
+      // TODO tab completion for empty input 
       let suggestions = [];
 
       if (parts.length === 1) {

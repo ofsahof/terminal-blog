@@ -6,6 +6,7 @@ import cdCommand from './cd';
 import manCommand from './man';
 import themeCommand from './theme';
 import neofetchCommand from './neofetch';
+import welcomeCommand from "./welcome";
 
 export const commands = {
   clear: clearCommand,
@@ -16,4 +17,5 @@ export const commands = {
   man: manCommand,          
   theme: themeCommand,      
   neofetch: neofetchCommand,
+  welcome: welcomeCommand
 };
