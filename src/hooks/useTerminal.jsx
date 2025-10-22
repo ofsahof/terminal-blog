@@ -30,7 +30,7 @@ export const useTerminal = ({onViewChange}) => {
     const cmdName = parts[0].toLowerCase();
     const args = parts.slice(1);
     
-    const context = { currentPath: path };
+    const context = { currentPath: path, allCommands: commands };
 
     if (cmdName && !commandHistory.includes(cmdStr)) {
       setCommandHistory([cmdStr, ...commandHistory]);
