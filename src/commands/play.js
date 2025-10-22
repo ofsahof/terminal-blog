@@ -1,9 +1,11 @@
-const availableGames = ['snake']; 
+import { gameRegistry } from '../games';
+
+const availableGames = Object.keys(gameRegistry);
 
 export default {
   name: 'play',
   description: `Launch a game. Available: ${availableGames.join(', ')}`,
-
+  
   execute: (args) => {
     if (args.length === 0) {
       return `Usage: play [game_name]\nAvailable: ${availableGames.join(', ')}`;
@@ -18,7 +20,7 @@ export default {
     return {
       isViewChange: true,
       newView: 'game',
-      gameName: gameName, 
+      gameName: gameName,
     };
   },
 };
