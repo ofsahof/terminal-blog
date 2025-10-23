@@ -1,0 +1,11 @@
+     ,----------------,       Name: OFS (Omer Faruk Sahin)
+    /  ,------------,  \      Host: TerminalFolio
+   /   /            \   \     OS: web-based
+  /   /              \   \    Kernel: Vite + React
+ /   /                \   \   Shell: TerminalFolio v1.0
+<   <                  >   >  Theme: dynamic
+ \   \                /   /   Skills: React, JS, CSS
+  \   \              /   /
+   \   \            /   /
+    \  '------------'  /
+     '----------------'

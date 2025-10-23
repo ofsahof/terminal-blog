@@ -2,6 +2,8 @@ import React from 'react';
 import { filesystem } from '../utils/filesystem.js';
 import { formatOrgMode } from '../utils/formatOrgMode.jsx';
 import { resolvePath, findEntry } from '../utils/pathHelper.js';
+import { fetchContent } from '../utils/contentFetcher.js';
+
 
 const isOrgMode = (text) => {
   if (typeof text !== 'string') return false;
@@ -19,7 +21,7 @@ const formatPlainText = (text) => {
 export default {
   name: 'cat',
   description: 'Concatenate and print files. Formats Org Mode content.',
-  execute: (args, context) => {
+  execute: async (args, context) => {
     const { currentPath } = context; 
 
     if (args.length === 0) {
@@ -38,7 +40,11 @@ export default {
       return `cat: ${path}: Is a directory`;
     }
 
-    const content = entry.content;
+    if(!entry.source) {
+      return `cat: ${path}: Error - File entry has no source path defined in filesystem.js.`;
+    }
+
+    const content = await fetchContent(entry.source);
 
     if (isOrgMode(content)) {
       return formatOrgMode(content);

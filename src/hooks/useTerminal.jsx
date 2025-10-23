@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { commands } from '../commands';
 
-export const useTerminal = ({onViewChange, initialHistory = []}) => {
-  const [history, setHistory] = useState(initialHistory);
+export const useTerminal = ({ onViewChange, initialHistory = [] }) => {
+  const [history, setHistory] = useState(initialHistory || []);
   const [command, setCommand] = useState('');
   const [path, setPath] = useState('~');
-  const [commandHistory, setCommandHistory] = useState(initialHistory);  
+  const [commandHistory, setCommandHistory] = useState([]);
   const [historyIndex, setHistoryIndex] = useState(-1);
 
   const terminalRef = useRef(null);
@@ -22,39 +22,44 @@ export const useTerminal = ({onViewChange, initialHistory = []}) => {
     document.body.className = `theme-${savedTheme}`;
   }, []);
 
-  const handleCommand = (cmdStr) => {
+  useEffect(() => {
+    if (initialHistory && history.length === 0) {
+      setHistory(initialHistory);
+    }
+  }, [initialHistory, history]); 
+
+  const handleCommand = async (cmdStr) => {
     const prompt = `<span class="prompt">${path} &gt;</span>`;
-    
+
     const parts = cmdStr.trim().split(' ');
     const cmdName = parts[0].toLowerCase();
     const args = parts.slice(1);
-    
+
     const context = { currentPath: path, allCommands: commands };
 
     if (cmdName && !commandHistory.includes(cmdStr)) {
       setCommandHistory([cmdStr, ...commandHistory]);
-    }  
+    }
     setHistoryIndex(-1);
 
     if (cmdName in commands) {
       const commandToExecute = commands[cmdName];
-      const result = commandToExecute.execute(args, context);
-
+      const result = await commandToExecute.execute(args, context);
 
       if (result?.isImmediateClear) {
-        setHistory(initialHistory); 
+        setHistory(initialHistory || []);
         return;
-      } 
-      
+      }
+
       if (result?.isPathUpdate) {
-        setHistory([...history, `${prompt} ${cmdStr}`]); 
+        setHistory([...history, `${prompt} ${cmdStr}`]);
         setPath(result.newPath);
         return;
-      } 
-      
+      }
+
       if (result?.isViewChange) {
         setHistory([...history, `${prompt} ${cmdStr}`]);
-        if(onViewChange) {
+        if (onViewChange) {
           onViewChange(result.newView, result.gameName);
         }
         return;
@@ -67,7 +72,6 @@ export const useTerminal = ({onViewChange, initialHistory = []}) => {
       setHistory(newHistory);
 
     } else if (cmdName) {
-      
       let newHistory = [...history, `${prompt} ${cmdStr}`];
       newHistory.push(`command not found: <span class="error">${cmdName}</span>`);
       setHistory(newHistory);
@@ -85,7 +89,7 @@ export const useTerminal = ({onViewChange, initialHistory = []}) => {
       const newIndex = Math.max(historyIndex - 1, -1);
       setHistoryIndex(newIndex);
       setCommand(commandHistory[newIndex] || '');
-    }else if (e.key === 'Tab') {
+    } else if (e.key === 'Tab') {
       e.preventDefault();
     } else if (e.key === 'Enter') {
       e.preventDefault();

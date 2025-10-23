@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import { useTerminal } from './hooks/useTerminal';
+import React, { useState, useEffect } from 'react';
+import { fetchContent } from './utils/contentFetcher.js';
+import { useTerminal } from './hooks/useTerminal.jsx';
 import { gameRegistry } from './games';
-import { welcomeMessage } from './commands/welcome';
 import './App.css';
 
 const renderHistoryLine = (line, index) => {
@@ -15,8 +15,17 @@ const renderHistoryLine = (line, index) => {
 };
 
 export default function App() {
+  const [initialHistory, setInitialHistory] = useState(null);
   const [view, setView] = useState('terminal');
   const [gameToLoad, setGameToLoad] = useState(null);
+
+  useEffect(() => {
+    const loadWelcome = async () => {
+      const content = await fetchContent('/content/welcome.txt');
+      setInitialHistory([content]);
+    };
+    loadWelcome();
+  }, []);
 
   const handleViewChange = (newView, gameName) => {
     setView(newView);
@@ -28,6 +37,7 @@ export default function App() {
     setGameToLoad(null);
   };
 
+
   const {
     history,
     path,
@@ -36,14 +46,33 @@ export default function App() {
     handleKeyDown,
     inputRef,
     terminalRef
-  } = useTerminal({ onViewChange: handleViewChange, initialHistory: welcomeMessage });
+  } = useTerminal({
+    onViewChange: handleViewChange,
+    initialHistory: initialHistory
+  });
 
+  if (!initialHistory) {
+    return (
+      <div style={{
+        width: '100vw',
+        height: '100vh',
+        backgroundColor: 'var(--bg)',
+        color: 'var(--fg)',
+        fontFamily: 'monospace',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center'
+      }}>
+        Booting TerminalFolio...
+      </div>
+    );
+  }
 
   if (view === 'terminal') {
     return (
-      <div  
-        className="terminal"  
-        ref={terminalRef}  
+      <div
+        className="terminal"
+        ref={terminalRef}
         onClick={() => inputRef.current?.focus()}
       >
         {history.map(renderHistoryLine)}
@@ -66,7 +95,7 @@ export default function App() {
         </div>
       </div>
     );
-  } 
+  }
 
   else if (view === 'game') {
     const GameComponent = gameRegistry[gameToLoad];
@@ -80,6 +109,6 @@ export default function App() {
       </div>
     );
   }
-  return <div>Loading...</div>;
 
+  return <div>Loading...</div>; // Fallback
 }

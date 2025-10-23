@@ -186,33 +186,12 @@ To maintain this architecture, follow these rules:
 4.  Register your game in `src/games/index.js` (e.g., `mygame: MyGame`).
 5.  **Done.** The `play mygame` command will now work automatically.
 
+
 ## 🗺️ Future Roadmap
 
-This project has two main roadmaps:
-1.  **Priority 1: "Production Ready" Refactor:** Making the existing application scalable and performant.
-2.  **Priority 2: "Living Platform" Features:** Expanding the terminal's capabilities.
+The core architecture is now stable and the content loading mechanism is **production-ready**. All content is decoupled from the code bundle and loaded asynchronously using `fetch`.
 
----
-
-### Priority 1: The "Production Ready" Plan (Immediate)
-
-The current architecture is clean, but **not production-ready**. The biggest flaw is that all content (`first-post.js`, `man/ofs.js`) is bundled into the main JavaScript package, leading to poor performance and scalability.
-
-This refactor is planned to **decouple content from the code bundle**.
-
-1.  **Move Content:** Move all content (`.org`, `.txt` files) to the `public/content/` directory.
-2.  **Update VFS:** `filesystem.js` entries will no longer hold `content: "..."`. Instead, they will hold a `source: "/content/posts/first-post.org"`.
-3.  **Create Fetcher:** Create a `fetchContent(path)` utility to `fetch` this static content.
-4.  **Async Commands:** All content-reading commands (`cat`, `man`, `neofetch`) must become `async`. They will `await fetchContent(entry.source)`.
-5.  **Async Core:** `useTerminal.jsx`'s `handleCommand` must become `async` to `await` the command execution.
-6.  **Async Welcome:** `App.jsx` must `fetch` the `welcome.txt` in a `useEffect` hook to set the `initialHistory` state.
-7.  **Dockerize:** Create a `Dockerfile` to containerize the final application for consistent production deployment.
-
----
-
-### Priority 2: The "Living Platform" Vision (Future Features)
-
-Once the core is optimized, we can expand the terminal's capabilities.
+The next steps focus on expanding the terminal's capabilities into a "Living Platform":
 
 * **A) Connect to the Outside World (API Integration):**
     * `github`: A command to fetch and list public repositories from the GitHub API.
@@ -226,3 +205,6 @@ Once the core is optimized, we can expand the terminal's capabilities.
 * **C) Make the VFS Persistent:**
     * `mkdir`, `touch`, `rm`: Add commands that can modify the VFS structure in memory.
     * `localStorage`: Use `localStorage` to save the user's VFS changes, so they persist after a page refresh.
+
+* **D) Deployment:**
+    * **Dockerize:** Create a `Dockerfile` to containerize the application for consistent production deployment.

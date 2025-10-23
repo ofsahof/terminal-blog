@@ -1,25 +1,17 @@
-import { ascii, info } from '../content/neofetch';
+import { fetchContent } from '../utils/contentFetcher.js';
+
+const NEOfETCH_SOURCE = '/public/content/neofetch.txt';
 
 export default {
   name: 'neofetch',
-  description: 'Display system and user information.',
-  execute: () => {
-    const currentTheme = localStorage.getItem('terminal-theme') || 'gruvbox';
-    const dynamicInfo = { ...info, 'Theme': currentTheme };
+  description: 'Display system information.',
 
-    const logoLines = ascii.split('\n');
-    const infoLines = Object.entries(dynamicInfo).map(
-      ([key, value]) => `<span class="neofetch-key">${key}:</span> ${value}`
-    );
-
-    let output = '';
-    const maxLines = Math.max(logoLines.length, infoLines.length);
-
-    for (let i = 0; i < maxLines; i++) {
-      const logoLine = logoLines[i] || '';
-      const infoLine = infoLines[i] || '';
-      output += `<div><span class="neofetch-logo">${logoLine.padEnd(30)}</span>${infoLine}</div>`;
+  execute: async (args, context) => {
+    try {
+      const content = await fetchContent(NEOfETCH_SOURCE);
+      return `<pre>${content}</pre>`;
+    } catch (error) {
+      return `Error: Could not load neofetch content. ${error.message}`;
     }
-    return `<div class="neofetch-container">${output}</div>`;
   },
 };
