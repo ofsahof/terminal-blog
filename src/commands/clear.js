@@ -1,8 +1,8 @@
 export default {
-  name: 'clear',
-  description: 'Clears the terminal screen.',
-  
-  execute: () => {
-    return { isImmediateClear: true };
-  },
+    name: 'clear',
+    description: 'Clears the terminal screen.',
+
+    execute: () => {
+        return { isImmediateClear: true };
+    },
 };

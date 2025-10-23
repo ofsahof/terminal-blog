@@ -1,108 +1,139 @@
 .terminal {
-  padding: 15px;
-  height: 100vh;
-  box-sizing: border-box;
-  overflow-y: auto;
-  line-height: 1.4;
+    padding: 15px;
+    height: 100vh;
+    box-sizing: border-box;
+    overflow-y: auto;
+    line-height: 1.4;
 }
 
 .input-line {
-  display: flex;
-  align-items: center;
+    display: flex;
+    align-items: center;
 }
 
 .input-line span {
-  margin-right: 8px;
-  white-space: pre;
+    margin-right: 8px;
+    white-space: pre;
 }
 
 .input-line input {
-  flex-grow: 1;
-  background-color: transparent;
-  border: none;
-  color: var(--fg);
-  font-family: inherit;
-  font-size: inherit;
+    flex-grow: 1;
+    background-color: transparent;
+    border: none;
+    color: var(--fg);
+    font-family: inherit;
+    font-size: inherit;
 }
 
 .input-line input:focus {
-  outline: none;
+    outline: none;
 }
 
 .prompt {
-  color: var(--green);
+    color: var(--green);
 }
 
 .error {
-  color: var(--red);
+    color: var(--red);
 }
 
 .help-grid {
-  display: grid;
-  grid-template-columns: 150px 1fr; 
-  gap: 5px 15px;
-  margin-top: 10px;
-  margin-bottom: 10px;
+    display: grid;
+    grid-template-columns: 150px 1fr;
+    gap: 5px 15px;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 
 .directory {
-  color: var(--blue);
-  font-weight: bold;
+    color: var(--blue);
+    font-weight: bold;
 }
 
 .file {
-  color: var(--fg); 
+    color: var(--fg);
 }
 
 pre {
-  margin: 0;
-  font-family: inherit;
-  font-size: inherit;
-  white-space: pre-wrap;
+    margin: 0;
+    font-family: inherit;
+    font-size: inherit;
+    white-space: pre-wrap;
 }
 
-.man-page { line-height: 1.5; }
-.man-header { text-align: center; margin-bottom: 20px; }
-.man-section { color: var(--green); margin-top: 15px; margin-bottom: 5px; }
-.man-grid { display: grid; grid-template-columns: 100px 1fr; }
-.man-page a { color: var(--aqua); text-decoration: underline; }
+.man-page {
+    line-height: 1.5;
+}
+.man-header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+.man-section {
+    color: var(--green);
+    margin-top: 15px;
+    margin-bottom: 5px;
+}
+.man-grid {
+    display: grid;
+    grid-template-columns: 100px 1fr;
+}
+.man-page a {
+    color: var(--aqua);
+    text-decoration: underline;
+}
 
-.neofetch-container { display: flex; flex-direction: column; }
-.neofetch-container > div { display: flex; align-items: center; white-space: pre; }
-.neofetch-logo { color: var(--blue); }
-.neofetch-key { color: var(--green); font-weight: bold; }
+.neofetch-container {
+    display: flex;
+    flex-direction: column;
+}
+.neofetch-container > div {
+    display: flex;
+    align-items: center;
+    white-space: pre;
+}
+.neofetch-logo {
+    color: var(--blue);
+}
+.neofetch-key {
+    color: var(--green);
+    font-weight: bold;
+}
 
 .fake-input {
-  display: flex;
-  align-items: center;
+    display: flex;
+    align-items: center;
 }
 .cursor {
-  background-color: var(--fg);
-  width: 9px; 
-  height: 1.2rem; 
-  margin-left: -5px;
-  animation: blink 1s step-end infinite;
+    background-color: var(--fg);
+    width: 9px;
+    height: 1.2rem;
+    margin-left: -5px;
+    animation: blink 1s step-end infinite;
 }
 @keyframes blink {
-  from, to { background-color: transparent; }
-  50% { background-color: var(--fg); }
+    from,
+    to {
+        background-color: transparent;
+    }
+    50% {
+        background-color: var(--fg);
+    }
 }
 
 .hidden-input {
-  opacity: 0;
-  position: absolute;
-  width: 0;
-  height: 0;
+    opacity: 0;
+    position: absolute;
+    width: 0;
+    height: 0;
 }
 
-
 .welcome-art {
-  color: var(--green);
-  margin: 0;
-  line-height: 1.2;
-  margin-bottom: 10px;
+    color: var(--green);
+    margin: 0;
+    line-height: 1.2;
+    margin-bottom: 10px;
 }
 
 .fake-input span {
-  white-space: pre;
+    white-space: pre;
 }

@@ -1,21 +1,21 @@
 import clearCommand from './clear';
 import helpCommand from './help';
-import lsCommand from './ls';   
-import catCommand from './cat'; 
+import lsCommand from './ls';
+import catCommand from './cat';
 import cdCommand from './cd';
 import manCommand from './man';
 import themeCommand from './theme';
 import neofetchCommand from './neofetch';
-import playCommand from "./play";
+import playCommand from './play';
 
 export const commands = {
-  clear: clearCommand,
-  help: helpCommand,
-  ls: lsCommand,
-  cat: catCommand,
-  cd: cdCommand,
-  man: manCommand,          
-  theme: themeCommand,      
-  neofetch: neofetchCommand,
-  play: playCommand
+    clear: clearCommand,
+    help: helpCommand,
+    ls: lsCommand,
+    cat: catCommand,
+    cd: cdCommand,
+    man: manCommand,
+    theme: themeCommand,
+    neofetch: neofetchCommand,
+    play: playCommand,
 };

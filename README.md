@@ -6,7 +6,6 @@ This document serves as the developer's guide to the architecture.
 
 ![Demo Screenshot (OFS Terminal)](./public/project_screenshot.png)
 
-
 ---
 
 ## 🚀 Getting Started (Local Development)
@@ -33,55 +32,30 @@ To get a local copy up and running, follow these simple steps.
 The `src` directory is organized by responsibility.
 
 - src/
-
-    - App.jsx # The View Controller (Core Shell)
-
-    - main.jsx # App entry point
-
-    - App.css # Global styles for the terminal UI
-
-    - index.css # CSS variables for themes
-
-    - commands/ # All pluggable terminal commands
-
-        - index.js # The Command Registry (registers all commands)
-
-        - cat.jsx # (UI Command) Renders file content
-
-        - ls.jsx # (UI Command) Renders file list
-
-        - help.jsx # (UI Command) Renders command list
-
-        - cd.js # (State Command) Changes VFS path
-
-        - play.js # (State Command) Changes app view
-
-        ... # Other commands...
-
-    - games/ # All pluggable games
-
-        - index.js # The Game Registry (registers all games)
-
-        - SnakeGame.jsx # The Snake game component
-
-    - hooks/ # Custom React Hooks
-
-        - useTerminal.jsx # The "Brain" (Core Logic & State)
-
-    - utils/ # Pure, non-stateful helper functions
-
-        - filesystem.js # The Virtual File System (VFS) data
-
-        - formatOrgMode.jsx # A UI helper to parse .org text to JSX
-
-        - pathHelper.js # VFS path resolution logic
-
-    - content/ # Static content (not bundled)
-
-        - posts/
-
-            - first-post.js # (Legacy file, to be refactored)
-
+  - `App.jsx` - The View Controller (Core Shell)
+  - `main.jsx` - App entry point
+  - `App.css` - Global styles for the terminal UI
+  - `index.css` - CSS variables for themes
+  - **commands/** - All pluggable terminal commands
+    - `index.js` - The Command Registry (registers all commands)
+    - `cat.jsx` - (UI Command) Renders file content
+    - `ls.jsx` - (UI Command) Renders file list
+    - `help.jsx` - (UI Command) Renders command list
+    - `cd.js` - (State Command) Changes VFS path
+    - `play.js` - (State Command) Changes app view
+    - `...` - Other commands...
+  - **games/** - All pluggable games
+    - `index.js` - The Game Registry (registers all games)
+    - `SnakeGame.jsx` - The Snake game component
+  - **hooks/** - Custom React Hooks
+    - `useTerminal.jsx` - The "Brain" (Core Logic & State)
+  - **utils/** - Pure, non-stateful helper functions
+    - `filesystem.js` - The Virtual File System (VFS) data
+    - `formatOrgMode.jsx` - A UI helper to parse .org text to JSX
+    - `pathHelper.js` - VFS path resolution logic
+  - **content/** - Static content (not bundled)
+    - **posts/**
+      - `first-post.js` - (Legacy file, to be refactored)
 
 ---
 
@@ -113,12 +87,14 @@ The architecture is designed to be **decoupled**. The "Core" knows nothing about
 This is the most important piece of the architecture. **Not all commands are treated equally.** `useTerminal.jsx`'s `handleCommand` function splits them into two categories:
 
 #### Category 1: State-Changing Commands (e.g., `cd`, `clear`, `play`)
+
 * **Job:** To change the application's state, *not* to print a simple line of text.
 * **Mechanism:** They return a special **signal object** (e.g., `{ isPathUpdate: true, newPath: '...' }` or `{ isViewChange: true, ... }`).
 * **Execution Flow:** `handleCommand` checks for these signal objects in an `if/else if` chain. If found, it performs the state-changing action (like `setPath(result.newPath)`) and **`return`s from the function immediately.**
 * This prevents the command from being processed like a "normal" command.
 
 #### Category 2: Content-Rendering Commands (e.g., `ls`, `cat`, `help`)
+
 * **Job:** To return content (a `string` or `JSX`) that should be printed to the screen.
 * **Mechanism:** They return the content directly (e.g., `return <div>...</div>` or `return 'file.txt'`).
 * **Execution Flow:** If a command is not a "State Changer," `handleCommand` assumes it's a "Content Renderer." It proceeds to the end of the function, where it appends *both* the user's input (the prompt) and the `result` from the command to the `history` state.
@@ -165,6 +141,24 @@ Theming is simple and global:
 
 To maintain this architecture, follow these rules:
 
+### Rule 0: Linting and Formatting
+
+This project uses ESLint and Prettier to enforce code style and catch potential errors. Please run the following commands before committing your changes to ensure consistency:
+
+* **Automatically format code:**
+    ```bash
+    npm run format
+    ```
+* **Automatically fix lint errors:**
+    ```bash
+    npm run lint:fix
+    ```
+* **Check for remaining lint errors:**
+    ```bash
+    npm run lint
+    ```
+    *(This command should report no errors or warnings after running the `fix` commands.)*
+
 ### Rule 1: How to Add a New Command
 
 1.  **Decide its type (JS vs. JSX):**
@@ -185,7 +179,6 @@ To maintain this architecture, follow these rules:
 3.  Your component **must** listen for the 'Escape' key and call `onExit()` when it's pressed.
 4.  Register your game in `src/games/index.js` (e.g., `mygame: MyGame`).
 5.  **Done.** The `play mygame` command will now work automatically.
-
 
 ## 🗺️ Future Roadmap
 

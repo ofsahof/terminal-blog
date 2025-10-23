@@ -1,46 +1,46 @@
 body.theme-gruvbox {
-  --bg: #1d2021;
-  --fg: #d4be98;
-  --red: #ea6962;
-  --green: #a9b665;
-  --yellow: #d8a657;
-  --blue: #7daea3;
-  --purple: #d3869b;
-  --aqua: #89b482;
-  --gray: #665c54;
-  --orange: #e78a4e;
+    --bg: #1d2021;
+    --fg: #d4be98;
+    --red: #ea6962;
+    --green: #a9b665;
+    --yellow: #d8a657;
+    --blue: #7daea3;
+    --purple: #d3869b;
+    --aqua: #89b482;
+    --gray: #665c54;
+    --orange: #e78a4e;
 }
 
 body.theme-solarized {
-  --bg: #002b36;
-  --fg: #839496;
-  --red: #dc322f;
-  --green: #859900;
-  --yellow: #b58900;
-  --blue: #268bd2;
-  --purple: #d33682;
-  --aqua: #2aa198;
+    --bg: #002b36;
+    --fg: #839496;
+    --red: #dc322f;
+    --green: #859900;
+    --yellow: #b58900;
+    --blue: #268bd2;
+    --purple: #d33682;
+    --aqua: #2aa198;
 }
 
 body.theme-dracula {
-  --bg: #282a36;
-  --fg: #f8f822;
-  --red: #ff5555;
-  --green: #50fa7b;
-  --yellow: #f1fa8c;
-  --blue: #bd93f9;
-  --purple: #ff79c6;
-  --aqua: #8be9fd;
+    --bg: #282a36;
+    --fg: #f8f822;
+    --red: #ff5555;
+    --green: #50fa7b;
+    --yellow: #f1fa8c;
+    --blue: #bd93f9;
+    --purple: #ff79c6;
+    --aqua: #8be9fd;
 }
 
 body {
-  margin: 0;
-  background-color: var(--bg);
-  color: var(--fg);
-  font-family: 'Consolas', 'Monaco', 'Courier New', Courier, monospace;
-  font-size: 1rem;
+    margin: 0;
+    background-color: var(--bg);
+    color: var(--fg);
+    font-family: 'Consolas', 'Monaco', 'Courier New', Courier, monospace;
+    font-size: 1rem;
 }
 
 #root {
-  height: 100vh;
+    height: 100vh;
 }
