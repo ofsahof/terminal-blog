@@ -201,3 +201,7 @@ The next steps focus on expanding the terminal's capabilities into a "Living Pla
 
 * **D) Deployment:**
     * **Dockerize:** Create a `Dockerfile` to containerize the application for consistent production deployment.
+
+*  **E) Core Improvements:**
+
+* **Input System Refactor:** Rebuild the "fake input" and cursor handling logic for better performance, reliability, and potentially adding features like an overwrite mode toggle.
