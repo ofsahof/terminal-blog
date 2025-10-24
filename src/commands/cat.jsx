@@ -9,16 +9,13 @@ const isOrgMode = (text) => {
 };
 
 const formatPlainText = (text) => {
-    return (
-        <div style={{ whiteSpace: 'pre-wrap', fontFamily: 'inherit' }}>
-            {text}
-        </div>
-    );
+    return <div className='cat-output cat-output--plain'>{text}</div>;
 };
 
 export default {
     name: 'cat',
-    description: 'Concatenate and print files. Formats Org Mode content.',
+    description: 'Concatenate and print files. (Now async)',
+
     execute: async (args, context) => {
         const { currentPath } = context;
 
@@ -32,22 +29,48 @@ export default {
         const entry = findEntry(resolvedPath, filesystem);
 
         if (!entry) {
-            return `cat: ${path}: No such file or directory`;
+            return (
+                <span className='error'>
+                    cat: {path}: No such file or directory
+                </span>
+            );
         }
         if (entry.type === 'directory') {
-            return `cat: ${path}: Is a directory`;
+            return <span className='error'>cat: {path}: Is a directory</span>;
         }
 
         if (!entry.source) {
-            return `cat: ${path}: Error - File entry has no source path defined in filesystem.js.`;
+            return (
+                <span className='error'>
+                    cat: {path}: Error - File entry has no source path defined
+                    in filesystem.js.
+                </span>
+            );
         }
 
-        const content = await fetchContent(entry.source);
+        try {
+            const content = await fetchContent(entry.source);
 
-        if (isOrgMode(content)) {
-            return formatOrgMode(content);
-        } else {
-            return formatPlainText(content);
+            if (typeof content !== 'string') {
+                return (
+                    <span className='error'>
+                        cat: {path}: Error fetching content or content is not
+                        text.
+                    </span>
+                );
+            }
+
+            if (isOrgMode(content)) {
+                return formatOrgMode(content);
+            } else {
+                return formatPlainText(content);
+            }
+        } catch (error) {
+            return (
+                <span className='error'>
+                    cat: {path}: Error - {error.message}
+                </span>
+            );
         }
     },
 };

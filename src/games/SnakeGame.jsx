@@ -193,37 +193,20 @@ export default function SnakeGame({ onExit }) {
         }
     }, [state.snake, state.food, state.isGameOver, state.score]);
 
-    const gameAreaStyle = {
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
-        width: '100vw',
-        height: '100vh',
-        backgroundColor: 'var(--bg)',
-        color: 'var(--fg)',
-        fontFamily: 'monospace',
-    };
-
-    const canvasStyle = {
-        backgroundColor: '#000',
-        border: `2px solid var(--gray, #665c54)`,
-    };
-
     return (
-        <div style={gameAreaStyle}>
-            <h2 style={{ color: 'var(--green)' }}>Snake</h2>
-            <h3 style={{ margin: '5px 0 10px 0' }}>Score: {state.score}</h3>
+        <div className='game-view'>
+            <h2 className='game-view__title'>Snake</h2>
+            <h3 className='game-view__score'>Score: {state.score}</h3>
 
             <canvas
                 ref={canvasRef}
                 id='game-canvas'
                 width={CANVAS_SIZE}
                 height={CANVAS_SIZE}
-                style={canvasStyle}
+                className='game-view__canvas'
             ></canvas>
 
-            <p style={{ marginTop: '20px', color: 'var(--gray)' }}>
+            <p className='game-view__instructions'>
                 Press 'ESC' to return to terminal.
             </p>
         </div>

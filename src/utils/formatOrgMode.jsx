@@ -3,6 +3,7 @@ export const formatOrgMode = (text) => {
     const elements = [];
     let inCodeBlock = false;
     let codeBlockContent = [];
+    let codeBlockLang = '';
 
     for (let i = 0; i < lines.length; i++) {
         const line = lines[i];
@@ -10,28 +11,19 @@ export const formatOrgMode = (text) => {
         if (line.trim().startsWith('#+BEGIN_SRC')) {
             inCodeBlock = true;
             codeBlockContent = [];
+            codeBlockLang = line.trim().substring(12).trim().toLowerCase();
             continue;
         }
 
         if (line.trim().startsWith('#+END_SRC')) {
             inCodeBlock = false;
             elements.push(
-                <pre
-                    key={`cb-${i}`}
-                    style={{
-                        backgroundColor: 'var(--bg)',
-                        color: 'var(--fg)',
-                        padding: '10px',
-                        borderRadius: '5px',
-                        margin: '10px 0',
-                        overflowX: 'auto',
-                        fontFamily: '"Fira Code", monospace',
-                        fontSize: '0.9rem',
-                    }}
-                >
+                <pre key={`cb-${i}`} className='org-output__code-block'>
                     <code>{codeBlockContent.join('\n')}</code>
                 </pre>
             );
+            codeBlockLang = '';
+            codeBlockLang;
             continue;
         }
 
@@ -44,7 +36,7 @@ export const formatOrgMode = (text) => {
             elements.push(
                 <h4
                     key={i}
-                    style={{ color: 'var(--aqua)', margin: '10px 0 2px 0' }}
+                    className='org-output__heading org-output__heading--h3'
                 >
                     {line.substring(4)}
                 </h4>
@@ -53,7 +45,7 @@ export const formatOrgMode = (text) => {
             elements.push(
                 <h3
                     key={i}
-                    style={{ color: 'var(--yellow)', margin: '12px 0 2px 0' }}
+                    className='org-output__heading org-output__heading--h2'
                 >
                     {line.substring(3)}
                 </h3>
@@ -62,35 +54,16 @@ export const formatOrgMode = (text) => {
             elements.push(
                 <h2
                     key={i}
-                    style={{
-                        color: 'var(--blue)',
-                        margin: '15px 0 5px 0',
-                        borderBottom: '1px solid var(--gray)',
-                    }}
+                    className='org-output__heading org-output__heading--h1'
                 >
                     {line.substring(2)}
                 </h2>
             );
         } else if (line.trim().startsWith('- ')) {
             elements.push(
-                <div
-                    key={i}
-                    style={{
-                        display: 'flex',
-                        alignItems: 'flex-start',
-                        marginLeft: '20px',
-                    }}
-                >
-                    <span
-                        style={{
-                            color: 'var(--purple)',
-                            marginRight: '10px',
-                            lineHeight: '1.5',
-                        }}
-                    >
-                        •
-                    </span>
-                    <span style={{ lineHeight: '1.5', color: 'inherit' }}>
+                <div key={i} className='org-output__list-item'>
+                    <span className='org-output__list-bullet'>•</span>
+                    <span className='org-output__list-text'>
                         {line.trim().substring(2)}
                     </span>
                 </div>
@@ -98,20 +71,11 @@ export const formatOrgMode = (text) => {
         } else {
             const content = line.trim() === '' ? '\u00A0' : line;
             elements.push(
-                <p
-                    key={i}
-                    style={{
-                        margin: '0',
-                        padding: '0',
-                        lineHeight: '1.5',
-                        color: 'inherit',
-                    }}
-                >
+                <div key={i} className='org-output__paragraph'>
                     {content}
-                </p>
+                </div>
             );
         }
     }
-
-    return <div>{elements}</div>;
+    return <div className='org-output'>{elements}</div>;
 };

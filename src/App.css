@@ -1,115 +1,77 @@
-.terminal {
-    padding: 15px;
-    height: 100vh;
+/* --- General Reset --- */
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
     box-sizing: border-box;
-    overflow-y: auto;
-    line-height: 1.4;
 }
 
+/* --- Main Terminal Structure --- */
+.terminal-container {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--bg);
+    color: var(--fg);
+    font-family: 'Consolas', 'Monaco', 'Courier New', Courier, monospace;
+    font-size: 1rem;
+}
+
+.history-container {
+    flex-grow: 1;
+    overflow-y: auto;
+    padding: 15px;
+    line-height: 1.4;
+    box-sizing: border-box;
+    min-height: 0; /* Scroll fix */
+}
+
+.history__line {
+    margin-bottom: 2px;
+}
+
+.input-container {
+    padding: 0 15px 15px 15px;
+}
+
+/* --- Input Line --- */
 .input-line {
     display: flex;
     align-items: center;
 }
 
-.input-line span {
+.input-line__prompt {
+    color: var(--green);
     margin-right: 8px;
     white-space: pre;
 }
 
-.input-line input {
-    flex-grow: 1;
-    background-color: transparent;
-    border: none;
-    color: var(--fg);
-    font-family: inherit;
-    font-size: inherit;
-}
-
-.input-line input:focus {
-    outline: none;
-}
-
-.prompt {
-    color: var(--green);
-}
-
-.error {
-    color: var(--red);
-}
-
-.help-grid {
-    display: grid;
-    grid-template-columns: 150px 1fr;
-    gap: 5px 15px;
-    margin-top: 10px;
-    margin-bottom: 10px;
-}
-
-.directory {
-    color: var(--blue);
-    font-weight: bold;
-}
-
-.file {
-    color: var(--fg);
-}
-
-pre {
-    margin: 0;
-    font-family: inherit;
-    font-size: inherit;
-    white-space: pre-wrap;
-}
-
-.man-page {
-    line-height: 1.5;
-}
-.man-header {
-    text-align: center;
-    margin-bottom: 20px;
-}
-.man-section {
-    color: var(--green);
-    margin-top: 15px;
-    margin-bottom: 5px;
-}
-.man-grid {
-    display: grid;
-    grid-template-columns: 100px 1fr;
-}
-.man-page a {
-    color: var(--aqua);
-    text-decoration: underline;
-}
-
-.neofetch-container {
-    display: flex;
-    flex-direction: column;
-}
-.neofetch-container > div {
-    display: flex;
-    align-items: center;
-    white-space: pre;
-}
-.neofetch-logo {
-    color: var(--blue);
-}
-.neofetch-key {
-    color: var(--green);
-    font-weight: bold;
-}
-
+.input-line__fake-input,
 .fake-input {
     display: flex;
     align-items: center;
+    flex-grow: 1;
+    position: relative; /* For absolute cursor positioning */
+    min-height: 1.2rem;
 }
-.cursor {
+
+.fake-input__text {
+    white-space: pre;
+}
+
+.fake-input__cursor {
     background-color: var(--fg);
     width: 9px;
     height: 1.2rem;
-    margin-left: -5px;
+    position: absolute; /* Positioning */
+    top: 0; /* Vertical alignment */
+    left: 0; /* Will be updated by JS */
     animation: blink 1s step-end infinite;
+    z-index: 2; /* Above text */
+    pointer-events: none; /* Not clickable */
 }
+
 @keyframes blink {
     from,
     to {
@@ -120,20 +82,256 @@ pre {
     }
 }
 
-.hidden-input {
+.input-line__hidden-input {
     opacity: 0;
     position: absolute;
+    top: 0;
+    left: 0;
     width: 0;
     height: 0;
-}
-
-.welcome-art {
-    color: var(--green);
+    caret-color: transparent;
+    border: none;
+    padding: 0;
     margin: 0;
-    line-height: 1.2;
-    margin-bottom: 10px;
+    outline: none;
 }
 
-.fake-input span {
+/* --- LS Command Output --- */
+.ls-output {
+    list-style: none;
+    padding: 0;
+    margin: 5px 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+.ls-item {
+} /* Common ls item style (currently empty) */
+.ls-item--directory {
+    color: var(--blue);
+    font-weight: bold;
+}
+.ls-item--file {
+    color: var(--fg);
+}
+
+/* --- Cat Command Output (Plain Text) --- */
+.cat-output--plain {
+    white-space: pre-wrap;
+    margin: 5px 0;
+}
+
+/* --- Org Mode Output Styles --- */
+.org-output {
+    margin: 5px 0;
+    line-height: 1.5;
+}
+.org-output__heading {
+}
+.org-output__heading--h1 {
+    color: var(--blue);
+    margin-top: 15px;
+    margin-bottom: 5px;
+    border-bottom: 1px solid var(--gray);
+    font-size: 1.25rem;
+    font-weight: bold;
+}
+.org-output__heading--h2 {
+    color: var(--yellow);
+    margin-top: 12px;
+    margin-bottom: 2px;
+    font-size: 1.1rem;
+    font-weight: bold;
+}
+.org-output__heading--h3 {
+    color: var(--aqua);
+    margin-top: 10px;
+    margin-bottom: 2px;
+    font-size: 1rem;
+    font-weight: bold;
+}
+.org-output__list-item {
+    display: flex;
+    align-items: flex-start;
+    margin-left: 20px;
+    margin-bottom: 3px;
+}
+.org-output__list-bullet {
+    color: var(--purple);
+    margin-right: 10px;
+    line-height: inherit;
+}
+.org-output__list-text {
+    line-height: inherit;
+    color: inherit;
+}
+.org-output__paragraph {
+    margin: 0;
+    padding: 0;
+    line-height: inherit;
+    color: inherit;
+    min-height: 1.5em;
+}
+.org-output__code-block {
+    background-color: var(--bg);
+    color: var(--fg);
+    padding: 10px;
+    border-radius: 5px;
+    margin: 10px 0;
+    overflow-x: auto;
+    font-family: 'Fira Code', monospace;
+    font-size: 0.9rem;
+    border: 1px solid var(--gray);
     white-space: pre;
+}
+
+/* --- Other Utility Classes --- */
+.error {
+    color: var(--red);
+}
+pre {
+    margin: 0;
+    font-family: inherit;
+    font-size: inherit;
+    white-space: pre-wrap;
+}
+
+/* --- Command Specific Classes --- */
+.help {
+    margin: 10px 0;
+}
+.help__title {
+    margin-bottom: 8px;
+    color: var(--yellow);
+    font-weight: bold;
+}
+.help__grid {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    gap: 3px 15px;
+}
+.help__command-name {
+    color: var(--blue);
+    white-space: nowrap;
+}
+.help__command-desc {
+    color: var(--fg);
+}
+
+.man-output {
+    margin: 10px 0;
+}
+
+.man-output .man-page {
+    line-height: 1.5;
+    font-size: 0.9rem;
+}
+.man-output .man-header {
+    text-align: center;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+.man-output .man-section {
+    color: var(--green);
+    margin-top: 15px;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+.man-output .man-grid {
+    display: grid;
+    grid-template-columns: 100px 1fr;
+    gap: 3px 10px;
+}
+.man-output .man-page a {
+    color: var(--aqua);
+    text-decoration: underline;
+}
+
+/* ... (help and man styles remain here) ... */
+
+.neofetch-output {
+    margin: 5px 0;
+    font-family: monospace;
+    line-height: 1.2;
+}
+
+.neofetch-output__line {
+    display: flex;
+    white-space: pre;
+}
+
+.neofetch-output__key {
+    color: var(--green);
+    font-weight: bold;
+    min-width: 70px;
+    display: inline-block;
+}
+
+.neofetch-output__value {
+    color: var(--fg);
+    flex-grow: 1;
+}
+
+.neofetch-output__ascii {
+    color: var(--blue);
+}
+
+/* --- Special States --- */
+.terminal-booting,
+.terminal-loading,
+.terminal-error {
+    width: 100vw;
+    height: 100vh;
+    background-color: var(--bg);
+    color: var(--fg);
+    font-family: 'Consolas', 'Monaco', 'Courier New', Courier, monospace;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.terminal-error button {
+    margin-top: 15px;
+    padding: 8px 15px;
+    background-color: var(--red);
+    color: var(--bg);
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: inherit;
+}
+
+/* --- Game View Styles --- */
+.game-view {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--bg);
+    color: var(--fg);
+    font-family: 'Consolas', 'Monaco', 'Courier New', Courier, monospace;
+}
+
+.game-view__title {
+    color: var(--green);
+    margin-bottom: 5px;
+    font-size: 1.5rem;
+}
+
+.game-view__score {
+    margin: 0 0 10px 0;
+    font-size: 1.1rem;
+}
+
+.game-view__canvas {
+    background-color: #000;
+    border: 2px solid var(--gray, #665c54);
+    display: block;
+}
+
+.game-view__instructions {
+    margin-top: 20px;
+    color: var(--gray);
+    font-size: 0.9rem;
 }

@@ -1,30 +1,33 @@
 import { fetchContent } from '../utils/contentFetcher.js';
 
-const MAN_BASE_PATH = '/content/man';
+const MAN_PATH_PREFIX = '/content/man/';
+const MAN_PATH_SUFFIX = '.txt';
 
 export default {
     name: 'man',
-    description: 'Display the manual page for a command or topic.',
+    description: 'Display the manual page for a command.',
 
     execute: async (args, _context) => {
         if (args.length === 0) {
-            return 'Usage: man [topic]';
+            return 'What manual page do you want?';
         }
-
-        const topic = args[0].toLowerCase();
-        const filePath = `${MAN_BASE_PATH}/${topic}.txt`;
+        const pageName = args[0].toLowerCase();
+        const sourcePath = `${MAN_PATH_PREFIX}${pageName}${MAN_PATH_SUFFIX}`;
 
         try {
-            const htmlContent = await fetchContent(filePath);
-
-            if (!htmlContent || htmlContent.trim() === '') {
-                return `man: No manual entry for ${topic}`;
+            const content = await fetchContent(sourcePath);
+            if (!content) {
+                return `man: No manual entry for ${pageName}`;
             }
-
-            return <div dangerouslySetInnerHTML={{ __html: htmlContent }} />;
+            return (
+                <div
+                    className='man-output'
+                    dangerouslySetInnerHTML={{ __html: content }}
+                />
+            );
         } catch (error) {
             console.log(error);
-            return `man: No manual entry for ${topic}`;
+            return `man: No manual entry for ${pageName}`;
         }
     },
 };

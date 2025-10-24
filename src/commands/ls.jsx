@@ -2,21 +2,15 @@ import { filesystem } from '../utils/filesystem.js';
 import { resolvePath, findEntry } from '../utils/pathHelper.js';
 
 const formatEntry = (name, type) => {
-    if (type === 'directory') {
-        return (
-            <span
-                key={name}
-                className='directory'
-                style={{ marginRight: '15px' }}
-            >
-                {name}/
-            </span>
-        );
-    }
+    const className =
+        type === 'directory'
+            ? 'ls-item ls-item--directory'
+            : 'ls-item ls-item--file';
     return (
-        <span key={name} className='file' style={{ marginRight: '15px' }}>
+        <li key={name} className={className}>
             {name}
-        </span>
+            {type === 'directory' ? '/' : ''}
+        </li>
     );
 };
 
@@ -36,7 +30,7 @@ export default {
 
         if (entry.type === 'file') {
             const name = resolvedPath.split('/').pop();
-            return formatEntry(name, 'file');
+            return <ul className='ls-output'>{formatEntry(name, 'file')}</ul>;
         }
 
         if (entry.type === 'directory') {
@@ -48,12 +42,7 @@ export default {
             if (entries.length === 0) {
                 return '';
             }
-
-            return (
-                <div style={{ display: 'flex', flexWrap: 'wrap' }}>
-                    {entries}
-                </div>
-            );
+            return <ul className='ls-output'>{entries}</ul>;
         }
 
         return '';

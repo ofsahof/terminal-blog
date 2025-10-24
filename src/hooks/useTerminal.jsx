@@ -7,15 +7,10 @@ export const useTerminal = ({ onViewChange, initialHistory = [] }) => {
     const [path, setPath] = useState('~');
     const [commandHistory, setCommandHistory] = useState([]);
     const [historyIndex, setHistoryIndex] = useState(-1);
+    const [cursorPos, setCursorPos] = useState(0);
 
     const terminalRef = useRef(null);
     const inputRef = useRef(null);
-
-    useEffect(() => {
-        if (terminalRef.current) {
-            terminalRef.current.scrollTop = terminalRef.current.scrollHeight;
-        }
-    }, [history]);
 
     useEffect(() => {
         const savedTheme = localStorage.getItem('terminal-theme') || 'gruvbox';
@@ -27,6 +22,19 @@ export const useTerminal = ({ onViewChange, initialHistory = [] }) => {
             setHistory(initialHistory);
         }
     }, [initialHistory, history]);
+
+    useEffect(() => {
+        scrollToBottom();
+    }, [history]);
+
+    const scrollToBottom = () => {
+        setTimeout(() => {
+            if (terminalRef.current) {
+                terminalRef.current.scrollTop =
+                    terminalRef.current.scrollHeight;
+            }
+        }, 0);
+    };
 
     const handleCommand = async (cmdStr) => {
         const prompt = `<span class="prompt">${path} &gt;</span>`;
@@ -99,6 +107,7 @@ export const useTerminal = ({ onViewChange, initialHistory = [] }) => {
             e.preventDefault();
             handleCommand(command);
             setCommand('');
+            setCursorPos(0);
         }
     };
 
@@ -110,5 +119,7 @@ export const useTerminal = ({ onViewChange, initialHistory = [] }) => {
         handleKeyDown,
         inputRef,
         terminalRef,
+        cursorPos,
+        setCursorPos,
     };
 };
