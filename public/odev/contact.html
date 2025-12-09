@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>İletişim</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <nav>
+        <ul>
+            <li><a href="index.html">Ana Sayfa</a></li>
+            <li>
+                <a href="#">Projelerim (▼)</a>
+                <ul>
+                    <li><a href="#">Web Tasarım</a></li>
+                    <li><a href="#">Mobil Uygulama</a></li>
+                    <li><a href="#">Veri Analizi</a></li>
+                </ul>
+            </li>
+            <li><a href="contact.html">İletişim</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <h2>İletişim Formu</h2>
+        <p>Aşağıdaki formu doldurarak bana ulaşabilirsiniz.</p>
+
+        <form onsubmit="event.preventDefault(); mesajGonder();">
+            <label>Adınız Soyadınız:</label>
+            <input type="text" id="ad" placeholder="Adınızı giriniz..." required>
+
+            <label>E-Posta:</label>
+            <input type="email" placeholder="ornek@email.com">
+
+            <label>Mesajınız:</label>
+            <textarea rows="5" placeholder="Mesajınızı buraya yazın..."></textarea>
+
+            <button type="submit">Gönder</button>
+        </form>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 - Ömer Faruk Şahin - Tüm Hakları Saklıdır.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Ana Sayfa ve Galeri</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <nav>
+        <ul>
+            <li><a href="index.html">Ana Sayfa</a></li>
+            <li>
+                <a href="#">Projelerim (▼)</a>
+                <ul>
+                    <li><a href="#">Web Tasarım</a></li>
+                    <li><a href="#">Mobil Uygulama</a></li>
+                    <li><a href="#">Veri Analizi</a></li>
+                </ul>
+            </li>
+            <li><a href="contact.html">İletişim</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <h1>Hoş Geldiniz</h1>
+        <p>Bu web sitesi, Web Tasarım dersi final projesi kapsamında <strong>HTML, CSS ve JavaScript</strong> kullanılarak hazırlanmıştır.</p>
+        
+        <hr>
+
+        <h2>Resim Galerisi</h2>
+        <p>Resimlerin üzerine tıklayarak büyük hallerini görebilirsiniz</p>
+        
+        <div class="gallery">
+            <img src="https://picsum.photos/id/1018/400/300" onclick="resimAc(this)" alt="Doğa">
+            <img src="https://picsum.photos/id/1015/400/300" onclick="resimAc(this)" alt="Nehir">
+            <img src="https://picsum.photos/id/1019/400/300" onclick="resimAc(this)" alt="Teknoloji">
+            <img src="https://picsum.photos/id/1016/400/300" onclick="resimAc(this)" alt="Kanyon">
+        </div>
+    </div>
+
+    <div id="modal">
+        <span onclick="modalKapat()">&times;</span>
+        <img id="buyukResim" src="">
+    </div>
+
+    <footer>
+        <p>&copy; 2025 - Ömer Faruk Şahin - Tüm Hakları Saklıdır - Enver Hoca'ma saygı ve sevgilerle...</p>
+    </footer>
+
+    <script src="script.js"></script> </body>
+</html>
