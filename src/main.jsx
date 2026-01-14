@@ -3,7 +3,7 @@ import { createRoot } from 'react-dom/client';
 import './index.css';
 import App from './App.jsx';
 
-document.body.className = 'theme-gruvbox';
+document.body.className = 'theme-dracula';
 
 createRoot(document.getElementById('root')).render(
     <StrictMode>

@@ -13,7 +13,7 @@ export const useTerminal = ({ onViewChange, initialHistory = [] }) => {
     const inputRef = useRef(null);
 
     useEffect(() => {
-        const savedTheme = localStorage.getItem('terminal-theme') || 'gruvbox';
+        const savedTheme = localStorage.getItem('terminal-theme') || 'dracula';
         document.body.className = `theme-${savedTheme}`;
     }, []);
 

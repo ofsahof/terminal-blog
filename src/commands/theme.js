@@ -6,7 +6,7 @@ export default {
     execute: (args) => {
         if (args.length === 0) {
             const currentTheme =
-                localStorage.getItem('terminal-theme') || 'gruvbox';
+                localStorage.getItem('terminal-theme') || 'dracula';
             return `Usage: theme [theme_name]\nAvailable: ${availableThemes.join(', ')}\nCurrent: ${currentTheme}`;
         }
         const themeName = args[0].toLowerCase();

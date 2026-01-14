@@ -105,8 +105,8 @@
     flex-wrap: wrap;
     gap: 15px;
 }
-.ls-item {
-} /* Common ls item style (currently empty) */
+/*.ls-item {
+}  Common ls item style (currently empty) */
 .ls-item--directory {
     color: var(--blue);
     font-weight: bold;
@@ -126,8 +126,9 @@
     margin: 5px 0;
     line-height: 1.5;
 }
+/*
 .org-output__heading {
-}
+}*/
 .org-output__heading--h1 {
     color: var(--blue);
     margin-top: 15px;
