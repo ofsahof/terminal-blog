@@ -1,4 +1,5 @@
 Proje teslim için dosya: PROJE_TANITIM.pdf
+[📄 PROJE TESLİM DOSYASI](PROJE_TANITIM.pdf)
 
 # TerminalFolio: A Developer-Centric Terminal Website
 
