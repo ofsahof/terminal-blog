@@ -1,3 +1,5 @@
+Proje teslim için dosya: PROJE_TANITIM.pdf
+
 # TerminalFolio: A Developer-Centric Terminal Website
 
 Welcome to TerminalFolio, a personal portfolio and blog built to emulate a modular, extensible Linux terminal. This project is written in React and designed with a core philosophy inspired by Emacs: a small, stable core responsible for state and rendering, extended by pluggable, independent modules (commands and games).
