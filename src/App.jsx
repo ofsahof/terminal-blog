@@ -27,17 +27,9 @@ const renderHistoryLine = (line, index) => {
 export default function App() {
     const [view, setView] = useState('terminal');
     const [gameToLoad, setGameToLoad] = useState(null);
-    const [initialHistory, setInitialHistory] = useState(null);
+    const [initialHistory, setInitialHistory] = useState([]); // Boş dizi ile başlatıyoruz
     const hasAutoRun = useRef(false);
-
-    useEffect(() => {
-        const loadWelcome = async () => {
-            const content = await fetchContent('/content/welcome.txt');
-            setInitialHistory([content]);
-        };
-        loadWelcome();
-    }, []);
-
+    
     const handleViewChange = (newView, gameName) => {
         setView(newView);
         setGameToLoad(gameName);
@@ -58,46 +50,25 @@ export default function App() {
         terminalRef,
         cursorPos,
         setCursorPos,
-        executeCommand,
+        executeCommand
     } = useTerminal({
         onViewChange: handleViewChange,
         initialHistory: initialHistory,
     });
 
     useEffect(() => {
-        if (
-            history.length > 0 &&
-            history[0] === initialHistory?.[0] &&
-            !hasAutoRun.current
-        ) {
+        if (!hasAutoRun.current) {
             executeCommand('help');
             hasAutoRun.current = true;
         }
-    }, [history, initialHistory, executeCommand]);
-
-    if (!initialHistory) {
-        return (
-            <div className='terminal-booting'>
-                Booting TerminalFolio v1.0...
-            </div>
-        );
-    }
+    }, [executeCommand]);
 
     const handleInputKeyDown = (e) => {
         handleTerminalKeyDown(e);
     };
 
     const handleInputKeyUp = (e) => {
-        if (
-            e.key === 'ArrowLeft' ||
-            e.key === 'ArrowRight' ||
-            e.key === 'ArrowUp' ||
-            e.key === 'ArrowDown' ||
-            e.key === 'Home' ||
-            e.key === 'End' ||
-            e.key === 'Backspace' ||
-            e.key === 'Delete'
-        ) {
+        if (['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 'Home', 'End', 'Backspace', 'Delete'].includes(e.key)) {
             requestAnimationFrame(() => {
                 if (inputRef.current) {
                     setCursorPos(inputRef.current.selectionStart);
@@ -112,7 +83,7 @@ export default function App() {
     };
 
     if (view === 'terminal') {
-        const cursorOffset = `${cursorPos * 0.6}em`;
+        const cursorOffset = `${cursorPos}ch`;
 
         return (
             <div className='terminal-container'>
@@ -129,30 +100,34 @@ export default function App() {
                         onClick={() => inputRef.current?.focus()}
                     >
                         <span className='input-line__prompt'>{path} &gt;</span>
-                        <div className='input-line__fake-input fake-input'>
-                            <span className='fake-input__text'>{command}</span>
-                            <div
-                                className='fake-input__cursor'
-                                style={{ left: cursorOffset }}
-                            ></div>
+                        <div className='fake-input-wrapper'>
+                            <div className='fake-input'>
+                                <span className='fake-input__text'>{command}</span>
+                                <div
+                                    className='fake-input__cursor'
+                                    style={{ left: cursorOffset }}
+                                ></div>
+                            </div>
+                            <input
+                                ref={inputRef}
+                                className='input-line__hidden-input'
+                                type='text'
+                                value={command}
+                                onChange={handleInputChange}
+                                onKeyDown={handleInputKeyDown}
+                                onKeyUp={handleInputKeyUp}
+                                autoFocus
+                                spellCheck="false"
+                                autoComplete="off"
+                                autoCapitalize="none"
+                            />
                         </div>
-                        <input
-                            ref={inputRef}
-                            className='input-line__hidden-input'
-                            type='text'
-                            value={command}
-                            onChange={handleInputChange}
-                            onKeyDown={handleInputKeyDown}
-                            onKeyUp={handleInputKeyUp}
-                            autoFocus
-                        />
                     </div>
                 </div>
             </div>
         );
     } else if (view === 'game') {
         const GameComponent = gameRegistry[gameToLoad];
-
         return GameComponent ? (
             <GameComponent onExit={handleGameExit} />
         ) : (
@@ -162,6 +137,5 @@ export default function App() {
             </div>
         );
     }
-
     return <div className='terminal-loading'>Loading...</div>;
 }

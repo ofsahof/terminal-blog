@@ -14,8 +14,10 @@
     flex-direction: column;
     background-color: var(--bg);
     color: var(--fg);
-    font-family: 'Consolas', 'Monaco', 'Courier New', Courier, monospace;
+    /* Monospace font 'ch' birimi ve ASCII sanatı için hayati önem taşır */
+    font-family: 'Consolas', 'Monaco', 'Courier New', Courier, monospace !important;
     font-size: 1rem;
+    overflow: hidden;
 }
 
 .history-container {
@@ -24,11 +26,16 @@
     padding: 15px;
     line-height: 1.4;
     box-sizing: border-box;
-    min-height: 0; /* Scroll fix */
+    min-height: 0; 
+    -webkit-overflow-scrolling: touch;
 }
 
 .history__line {
     margin-bottom: 2px;
+    /* Welcome mesajındaki ASCII sanatını ve boşlukları korumak için */
+    white-space: pre-wrap;
+    word-break: normal;
+    overflow-wrap: break-word;
 }
 
 .input-container {
@@ -38,62 +45,64 @@
 /* --- Input Line --- */
 .input-line {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
+    position: relative;
 }
 
 .input-line__prompt {
     color: var(--green);
     margin-right: 8px;
     white-space: pre;
+    flex-shrink: 0;
 }
 
 .input-line__fake-input,
 .fake-input {
-    display: flex;
+    font-family: inherit !important;
     align-items: center;
     flex-grow: 1;
-    position: relative; /* For absolute cursor positioning */
+    position: relative;
     min-height: 1.2rem;
+    display: inline-block;
+    word-break: break-all;
+    white-space: pre-wrap;
+    z-index: 1;
 }
 
 .fake-input__text {
-    white-space: pre;
+    white-space: pre-wrap;
 }
 
 .fake-input__cursor {
+    width: 8px;
     background-color: var(--fg);
-    width: 9px;
     height: 1.2rem;
-    position: absolute; /* Positioning */
-    top: 0; /* Vertical alignment */
-    left: 0; /* Will be updated by JS */
+    position: absolute;
+    top: 0;
     animation: blink 1s step-end infinite;
-    z-index: 2; /* Above text */
-    pointer-events: none; /* Not clickable */
+    pointer-events: none;
 }
 
 @keyframes blink {
-    from,
-    to {
-        background-color: transparent;
-    }
-    50% {
-        background-color: var(--fg);
-    }
+    from, to { background-color: transparent; }
+    50% { background-color: var(--fg); }
 }
 
 .input-line__hidden-input {
+    font-family: inherit !important;
     opacity: 0;
     position: absolute;
     top: 0;
     left: 0;
-    width: 0;
-    height: 0;
+    width: 100%;
+    height: 100%;
     caret-color: transparent;
     border: none;
     padding: 0;
     margin: 0;
     outline: none;
+    z-index: 10;
+    font-size: 16px; /* Mobilde zoom yapmasını engeller */
 }
 
 /* --- LS Command Output --- */
@@ -103,10 +112,9 @@
     margin: 5px 0;
     display: flex;
     flex-wrap: wrap;
-    gap: 15px;
+    gap: 10px 20px;
 }
-/*.ls-item {
-}  Common ls item style (currently empty) */
+
 .ls-item--directory {
     color: var(--blue);
     font-weight: bold;
@@ -115,10 +123,11 @@
     color: var(--fg);
 }
 
-/* --- Cat Command Output (Plain Text) --- */
+/* --- Cat Command Output --- */
 .cat-output--plain {
     white-space: pre-wrap;
     margin: 5px 0;
+    word-break: break-all;
 }
 
 /* --- Org Mode Output Styles --- */
@@ -126,9 +135,7 @@
     margin: 5px 0;
     line-height: 1.5;
 }
-/*
-.org-output__heading {
-}*/
+
 .org-output__heading--h1 {
     color: var(--blue);
     margin-top: 15px;
@@ -160,7 +167,6 @@
 .org-output__list-bullet {
     color: var(--purple);
     margin-right: 10px;
-    line-height: inherit;
 }
 .org-output__list-text {
     line-height: inherit;
@@ -186,7 +192,7 @@
     white-space: pre;
 }
 
-/* --- Other Utility Classes --- */
+/* --- Utility --- */
 .error {
     color: var(--red);
 }
@@ -197,7 +203,7 @@ pre {
     white-space: pre-wrap;
 }
 
-/* --- Command Specific Classes --- */
+/* --- Help --- */
 .help {
     margin: 10px 0;
 }
@@ -208,8 +214,8 @@ pre {
 }
 .help__grid {
     display: grid;
-    grid-template-columns: 120px 1fr;
-    gap: 3px 15px;
+    grid-template-columns: auto 1fr;
+    gap: 3px 20px;
 }
 .help__command-name {
     color: var(--blue);
@@ -219,10 +225,10 @@ pre {
     color: var(--fg);
 }
 
+/* --- Man --- */
 .man-output {
     margin: 10px 0;
 }
-
 .man-output .man-page {
     line-height: 1.5;
     font-size: 0.9rem;
@@ -240,39 +246,34 @@ pre {
 }
 .man-output .man-grid {
     display: grid;
-    grid-template-columns: 100px 1fr;
-    gap: 3px 10px;
+    grid-template-columns: auto 1fr;
+    gap: 5px 15px;
 }
 .man-output .man-page a {
     color: var(--aqua);
     text-decoration: underline;
 }
 
-/* ... (help and man styles remain here) ... */
-
+/* --- Neofetch --- */
 .neofetch-output {
     margin: 5px 0;
     font-family: monospace;
     line-height: 1.2;
 }
-
 .neofetch-output__line {
     display: flex;
     white-space: pre;
 }
-
 .neofetch-output__key {
     color: var(--green);
     font-weight: bold;
     min-width: 70px;
     display: inline-block;
 }
-
 .neofetch-output__value {
     color: var(--fg);
     flex-grow: 1;
 }
-
 .neofetch-output__ascii {
     color: var(--blue);
 }
@@ -285,7 +286,7 @@ pre {
     height: 100vh;
     background-color: var(--bg);
     color: var(--fg);
-    font-family: 'Consolas', 'Monaco', 'Courier New', Courier, monospace;
+    font-family: inherit;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -302,7 +303,7 @@ pre {
     font-family: inherit;
 }
 
-/* --- Game View Styles --- */
+/* --- Game View --- */
 .game-view {
     height: 100vh;
     display: flex;
@@ -311,28 +312,55 @@ pre {
     align-items: center;
     background-color: var(--bg);
     color: var(--fg);
-    font-family: 'Consolas', 'Monaco', 'Courier New', Courier, monospace;
 }
-
 .game-view__title {
     color: var(--green);
     margin-bottom: 5px;
     font-size: 1.5rem;
 }
-
 .game-view__score {
     margin: 0 0 10px 0;
     font-size: 1.1rem;
 }
-
 .game-view__canvas {
     background-color: #000;
     border: 2px solid var(--gray, #665c54);
     display: block;
+    max-width: 95vw;
 }
-
 .game-view__instructions {
     margin-top: 20px;
     color: var(--gray);
     font-size: 0.9rem;
+}
+
+/* --- Responsive Fixes --- */
+@media (max-width: 600px) {
+    .help__grid, .man-grid {
+        grid-template-columns: 1fr;
+        gap: 8px;
+    }
+    .help__command-name {
+        color: var(--yellow);
+    }
+    .neofetch-output__line {
+        flex-direction: column;
+        white-space: pre-wrap;
+    }
+}
+
+/* Welcome Mesajı ve ASCII Sanatı Fixi */
+@media (max-width: 480px) {
+    .terminal-container {
+        font-size: 0.8rem; /* Çok küçük ekranlarda taşmayı önlemek için yazı boyutu düşer */
+    }
+    .neofetch-output__ascii {
+        font-size: 0.6rem;
+    }
+}
+
+@media (max-width: 360px) {
+    .terminal-container {
+        font-size: 0.7rem; /* iPhone SE gibi ekranlar için ekstra küçültme */
+    }
 }
