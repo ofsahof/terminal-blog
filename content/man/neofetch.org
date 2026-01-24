@@ -1,0 +1,7 @@
+* NEOFETCH(1)
+
+** NAME
+   neofetch - a command-line system information tool
+
+** DESCRIPTION
+   Neofetch displays information about your operating system, software and hardware in an aesthetic and visually pleasing way.

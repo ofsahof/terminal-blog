@@ -1,0 +1,13 @@
+* PLAY(1)
+
+** NAME
+   play - launch a game or application
+
+** SYNOPSIS
+   play [GAME_NAME]
+
+** DESCRIPTION
+   Launches the specified game or interactive module.
+
+   Available games:
+   - snake : Classic Snake game
