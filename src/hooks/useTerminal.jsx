@@ -121,5 +121,10 @@ export const useTerminal = ({ onViewChange, initialHistory = [] }) => {
         terminalRef,
         cursorPos,
         setCursorPos,
+        executeCommand: (cmdText) => {
+            if (cmdText) {
+                handleCommand(cmdText);
+            }
+        },
     };
 };

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useTerminal } from './hooks/useTerminal.jsx';
 import { gameRegistry } from './games/index.js';
 import { fetchContent } from './utils/contentFetcher.js';
@@ -28,6 +28,7 @@ export default function App() {
     const [view, setView] = useState('terminal');
     const [gameToLoad, setGameToLoad] = useState(null);
     const [initialHistory, setInitialHistory] = useState(null);
+    const hasAutoRun = useRef(false);
 
     useEffect(() => {
         const loadWelcome = async () => {
@@ -57,10 +58,22 @@ export default function App() {
         terminalRef,
         cursorPos,
         setCursorPos,
+        executeCommand,
     } = useTerminal({
         onViewChange: handleViewChange,
         initialHistory: initialHistory,
     });
+
+    useEffect(() => {
+        if (
+            history.length > 0 &&
+            history[0] === initialHistory?.[0] &&
+            !hasAutoRun.current
+        ) {
+            executeCommand('help');
+            hasAutoRun.current = true;
+        }
+    }, [history, initialHistory, executeCommand]);
 
     if (!initialHistory) {
         return (
