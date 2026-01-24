@@ -15,7 +15,8 @@
     background-color: var(--bg);
     color: var(--fg);
     /* Monospace font 'ch' birimi ve ASCII sanatı için hayati önem taşır */
-    font-family: 'Consolas', 'Monaco', 'Courier New', Courier, monospace !important;
+    font-family:
+        'Consolas', 'Monaco', 'Courier New', Courier, monospace !important;
     font-size: 1rem;
     overflow: hidden;
 }
@@ -26,7 +27,7 @@
     padding: 15px;
     line-height: 1.4;
     box-sizing: border-box;
-    min-height: 0; 
+    min-height: 0;
     -webkit-overflow-scrolling: touch;
 }
 
@@ -84,8 +85,13 @@
 }
 
 @keyframes blink {
-    from, to { background-color: transparent; }
-    50% { background-color: var(--fg); }
+    from,
+    to {
+        background-color: transparent;
+    }
+    50% {
+        background-color: var(--fg);
+    }
 }
 
 .input-line__hidden-input {
@@ -336,7 +342,8 @@ pre {
 
 /* --- Responsive Fixes --- */
 @media (max-width: 600px) {
-    .help__grid, .man-grid {
+    .help__grid,
+    .man-grid {
         grid-template-columns: 1fr;
         gap: 8px;
     }

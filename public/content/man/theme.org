@@ -1,0 +1,16 @@
+* THEME(1)
+
+** NAME
+   theme - change the terminal theme
+
+** SYNOPSIS
+   theme [THEME_NAME]
+
+** DESCRIPTION
+   Change the color scheme of the terminal.
+
+   Available themes:
+   - dracula
+   - gruvbox
+   - solarized
+   - monokai

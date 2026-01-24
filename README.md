@@ -68,15 +68,19 @@ The architecture is designed to be **decoupled**. The "Core" knows nothing about
 
 ### 1. The Core: `App.jsx` + `useTerminal.jsx`
 
-* **`App.jsx` (The Shell / View Controller):**
-    * This component has **no terminal logic.**
-    * Its **only** job is to control the "Application View" state (`view: 'terminal' | 'game'`).
-    * It imports the `gameRegistry` and renders either the `Terminal` component or the correct `GameComponent` based on the `view` state.
-    * It passes the `initialHistory` (from `welcomeMessage`) and the `onViewChange` callback down to the `useTerminal` hook.
-
-* **`useTerminal.jsx` (The Brain / Core Logic):**
-    * This custom hook manages **all terminal state**:
-        * `history`: The array of lines displayed on the screen (can be strings or JSX).
+71: * **`App.jsx` (The Shell / View Controller):**
+72:     * This component has **no terminal logic.**
+73:     * Its **only** job is to control the "Application View" state (`view: 'terminal' | 'game'`).
+74:     * It imports the `gameRegistry` and renders either the `Terminal` component or the correct `GameComponent` based on the `view` state.
+75: 
+76: * **`src/components/Terminal/Terminal.jsx`:**
+77:     * The main container for the terminal interface.
+78:     * Uses the `useTerminal` hook to manage state and logic.
+79:     * Renders `TerminalHistory` (output) and `TerminalInput` (user interaction).
+80: 
+81: * **`useTerminal.jsx` (The Brain / Core Logic):**
+82:     * This custom hook manages **all terminal state**:
+83:         * `history`: The array of lines displayed on the screen (can be strings, JSX, or component objects).
         * `command`: The text currently in the input.
         * `path`: The current VFS path (e.g., `~/projects`).
         * `commandHistory`: The array of past commands for Arrow Key navigation.
@@ -202,9 +206,59 @@ The next steps focus on expanding the terminal's capabilities into a "Living Pla
     * `mkdir`, `touch`, `rm`: Add commands that can modify the VFS structure in memory.
     * `localStorage`: Use `localStorage` to save the user's VFS changes, so they persist after a page refresh.
 
-* **D) Deployment:**
-    * **Dockerize:** Create a `Dockerfile` to containerize the application for consistent production deployment.
+*   **A) Connect to the Outside World (API Integration):**
+    *   `github`: A command to fetch and list public repositories from the GitHub API.
+    *   `weather`: A command to get the weather for a specified city.
+    *   `fetch`: A `curl`-like command to make GET requests to any public API and print the JSON response.
 
-*  **E) Core Improvements:**
+*   **B) Create In-Terminal Applications:**
+    *   `grep` & Pipe Support (`|`): Refactor `handleCommand` to support piping output from one command (like `cat`) to another (like `grep`).
+    *   `nano` / `vim`: Create a full-screen text editor view (like `play` command) to edit VFS files (temporarily).
 
-* **Input System Refactor:** Rebuild the "fake input" and cursor handling logic for better performance, reliability, and potentially adding features like an overwrite mode toggle.
+*   **C) Make the VFS Persistent:**
+    *   `mkdir`, `touch`, `rm`: Add commands that can modify the VFS structure in memory.
+    *   `localStorage`: Use `localStorage` to save the user's VFS changes, so they persist after a page refresh.
+
+*   **D) Deployment:**
+    *   **Dockerize:** Create a `Dockerfile` to containerize the application for consistent production deployment.
+
+*   **E) Core Improvements:**
+
+*   **Input System Refactor:** Rebuild the "fake input" and cursor handling logic for better performance, reliability, and potentially adding features like an overwrite mode toggle.
+
+---
+
+## 📚 Content Management Guide
+
+How to add new content, pages, and games to the platform.
+
+### 1. Adding a Static Page (About, Projects, etc.)
+These are pages read by the `cat` command.
+
+1.  **Create File:** Create a `.md` file in `public/content/` (e.g., `skills.md`).
+2.  **Write Content:** Use standard Markdown.
+3.  **Register:** Add to `src/utils/filesystem.js`:
+    ```javascript
+    'skills.md': {
+        type: 'file',
+        source: '/content/skills.md',
+    },
+    ```
+
+### 2. Adding a Blog Post
+1.  **Create File:** Create a `.md` file in `public/content/posts/` (e.g., `react-hooks.md`).
+2.  **Register:** Add to `src/utils/filesystem.js` under the `blog` directory.
+
+### 3. Adding a Man Page
+Manual pages displayed by `man [command]`.
+
+1.  **Create File:** Create a `.org` file in `public/content/man/` (e.g., `git.org`).
+2.  **Format:** Use Org Mode headers (`* TITLE`, `** SECTION`).
+3.  **Register:** Add the command name to `AVAILABLE_MAN_PAGES` array in `src/commands/man.jsx`.
+
+### 4. Adding a New Game
+1.  **Create Component:** Create a React component in `src/games/` (e.g., `Tetris.jsx`).
+    *   Must accept `onExit` prop.
+    *   Must call `onExit()` on Escape key.
+2.  **Register:** Import and add to `gameRegistry` in `src/games/index.js`.
+3.  **Add Man Page:** Create `public/content/man/play.org` entry for the new game.

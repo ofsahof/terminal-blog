@@ -2,16 +2,16 @@ export const filesystem = {
     '~': {
         type: 'directory',
         children: {
-            'about.txt': {
+            'about.md': {
                 type: 'file',
-                source: '/content/about.txt',
+                source: '/content/about.md',
             },
             projects: {
                 type: 'directory',
                 children: {
-                    'terminalfolio.txt': {
+                    'terminalfolio.md': {
                         type: 'file',
-                        source: '/content/projects/terminalfolio.txt',
+                        source: '/content/projects/terminalfolio.md',
                     },
                 },
             },

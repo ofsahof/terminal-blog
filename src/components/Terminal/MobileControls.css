@@ -1,0 +1,58 @@
+.mobile-controls {
+    display: none;
+    /* Hidden by default on desktop */
+    width: 100%;
+    background-color: var(--bg);
+    border-top: 1px solid var(--gray);
+    padding: 8px 10px;
+    /* Fixed at bottom or part of layout? 
+       Ideally, part of flex layout to avoid covering input 
+       since virtual keyboard pushes layout up */
+    flex-shrink: 0;
+}
+
+.mobile-controls__row {
+    display: flex;
+    justify-content: space-around;
+    gap: 10px;
+}
+
+.mobile-btn {
+    background-color: #333;
+    color: var(--fg);
+    border: 1px solid var(--gray);
+    border-radius: 4px;
+    padding: 10px 0;
+    flex: 1;
+    font-family: inherit;
+    font-size: 0.9rem;
+    font-weight: bold;
+    cursor: pointer;
+    user-select: none;
+    touch-action: manipulation;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.1s;
+}
+
+.mobile-btn:active {
+    background-color: #555;
+    transform: translateY(1px);
+}
+
+.mobile-btn--red {
+    color: var(--red);
+    border-color: var(--red);
+}
+
+.mobile-btn--red:active {
+    background-color: rgba(255, 85, 85, 0.2);
+}
+
+/* Show only on small screens */
+@media (max-width: 768px) {
+    .mobile-controls {
+        display: block;
+    }
+}

@@ -1,7 +1,20 @@
 import { fetchContent } from '../utils/contentFetcher.js';
+import ContentRenderer from '../components/ContentRenderer';
 
 const MAN_PATH_PREFIX = '/content/man/';
-const MAN_PATH_SUFFIX = '.txt';
+const MAN_PATH_SUFFIX = '.org';
+
+const AVAILABLE_MAN_PAGES = [
+    'ofs',
+    'ls',
+    'cat',
+    'cd',
+    'help',
+    'neofetch',
+    'clear',
+    'theme',
+    'play',
+];
 
 export default {
     name: 'man',
@@ -9,9 +22,29 @@ export default {
 
     execute: async (args, _context) => {
         if (args.length === 0) {
-            return 'What manual page do you want?';
+            return (
+                <div className='man-output'>
+                    <div className='man-header'>Available Manual Pages</div>
+                    <div className='man-grid'>
+                        {AVAILABLE_MAN_PAGES.map((page) => (
+                            <div key={page} className='man-page-item'>
+                                - {page}
+                            </div>
+                        ))}
+                    </div>
+                    <div style={{ marginTop: '10px', color: 'var(--gray)' }}>
+                        Usage: man [page_name]
+                    </div>
+                </div>
+            );
         }
         const pageName = args[0].toLowerCase();
+
+        // Optional: Check if page exists in list before fetching, or just fetch
+        if (!AVAILABLE_MAN_PAGES.includes(pageName)) {
+            return `man: No manual entry for ${pageName}`;
+        }
+
         const sourcePath = `${MAN_PATH_PREFIX}${pageName}${MAN_PATH_SUFFIX}`;
 
         try {
@@ -19,14 +52,9 @@ export default {
             if (!content) {
                 return `man: No manual entry for ${pageName}`;
             }
-            return (
-                <div
-                    className='man-output'
-                    dangerouslySetInnerHTML={{ __html: content }}
-                />
-            );
-        } catch (error) {
-            console.log(error);
+            return <ContentRenderer content={content} type='org' />;
+        } catch (_error) {
+            // console.log(_error);
             return `man: No manual entry for ${pageName}`;
         }
     },

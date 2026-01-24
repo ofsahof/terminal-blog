@@ -1,0 +1,13 @@
+.history-container {
+    flex: 1;
+    overflow-y: auto;
+    margin-bottom: 10px;
+    scrollbar-width: thin;
+    scrollbar-color: var(--text-color) transparent;
+}
+
+.history__line {
+    margin-bottom: 4px;
+    line-height: 1.5;
+    word-break: break-word;
+}

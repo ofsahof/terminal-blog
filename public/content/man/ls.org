@@ -1,0 +1,13 @@
+* LS(1)
+
+** NAME
+   ls - list directory contents
+
+** SYNOPSIS
+   ls [FILE]...
+
+** DESCRIPTION
+   List information about the FILES (the current directory by default).
+
+   - -a, --all : do not ignore entries starting with .
+   - -l : use a long listing format

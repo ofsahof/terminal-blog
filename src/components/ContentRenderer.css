@@ -1,0 +1,148 @@
+/* Base Markdown Container */
+.markdown-content {
+    line-height: 1.5;
+    color: var(--fg);
+    margin: 5px 0;
+}
+
+/* Headings */
+.markdown-content h1 {
+    color: var(--blue);
+    margin-top: 15px;
+    margin-bottom: 5px;
+    border-bottom: 1px solid var(--gray);
+    font-size: 1.25rem;
+    font-weight: bold;
+}
+
+.markdown-content h2 {
+    color: var(--yellow);
+    margin-top: 12px;
+    margin-bottom: 2px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    border-bottom: none;
+    /* Reset if needed */
+}
+
+.markdown-content h3 {
+    color: var(--aqua);
+    margin-top: 10px;
+    margin-bottom: 2px;
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+.markdown-content h4,
+.markdown-content h5,
+.markdown-content h6 {
+    color: var(--fg);
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+/* Paragraphs */
+.markdown-content p {
+    margin: 0 0 10px 0;
+    /* Match org-output__paragraph min-height if desired, but 0 is usually better for MD */
+    min-height: 1em;
+}
+
+/* Lists */
+.markdown-content ul,
+.markdown-content ol {
+    margin-bottom: 10px;
+    padding-left: 20px;
+}
+
+.markdown-content li {
+    margin-bottom: 3px;
+    /* Custom bullet color requires pseudo-elements or specific structure */
+    /* Markdown defaults are usually okay, but let's try to match if possible */
+}
+
+.markdown-content ul li::marker {
+    color: var(--purple);
+    /* Match org-output__list-bullet */
+}
+
+/* Links */
+.markdown-content a {
+    color: var(--accent-color, #61dafb);
+    /* Or keep default link color? Org uses inherit usually but web needs distinct */
+    text-decoration: underline;
+}
+
+/* Code */
+.markdown-content code {
+    font-family: 'Fira Code', monospace;
+    background-color: var(--bg);
+    /* Or slightly lighter? */
+    padding: 2px 4px;
+    border-radius: 3px;
+    border: 1px solid var(--gray);
+    /* Optional */
+}
+
+.markdown-content pre {
+    background-color: var(--bg);
+    color: var(--fg);
+    padding: 10px;
+    border-radius: 5px;
+    margin: 10px 0;
+    overflow-x: auto;
+    font-family: 'Fira Code', monospace;
+    font-size: 0.9rem;
+    border: 1px solid var(--gray);
+}
+
+.markdown-content pre code {
+    background-color: transparent;
+    padding: 0;
+    border: none;
+}
+
+/* Blockquotes */
+.markdown-content blockquote {
+    border-left: 4px solid var(--purple);
+    margin-left: 0;
+    padding-left: 15px;
+    color: var(--gray);
+    font-style: italic;
+}
+
+/* Tables */
+.markdown-content table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 1em;
+}
+
+.markdown-content th,
+.markdown-content td {
+    border: 1px solid var(--gray);
+    padding: 8px;
+    text-align: left;
+}
+
+.markdown-content th {
+    color: var(--yellow);
+    font-weight: bold;
+}
+
+/* Images */
+.markdown-content img {
+    max-width: 100%;
+    height: auto;
+    border: 1px solid var(--gray);
+    border-radius: 4px;
+}
+
+/* Fallback for Plain Text view */
+.text-content {
+    white-space: pre-wrap;
+    font-family: inherit;
+    margin: 5px 0;
+    line-height: 1.4;
+    word-break: break-all;
+}

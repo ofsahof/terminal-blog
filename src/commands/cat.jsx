@@ -1,16 +1,7 @@
 import { filesystem } from '../utils/filesystem.js';
-import { formatOrgMode } from '../utils/formatOrgMode.jsx';
 import { resolvePath, findEntry } from '../utils/pathHelper.js';
 import { fetchContent } from '../utils/contentFetcher.js';
-
-const isOrgMode = (text) => {
-    if (typeof text !== 'string') return false;
-    return /^(?:\* |\*\* |\*\*\* |#\+BEGIN_SRC|- )/m.test(text);
-};
-
-const formatPlainText = (text) => {
-    return <div className='cat-output cat-output--plain'>{text}</div>;
-};
+import ContentRenderer from '../components/ContentRenderer';
 
 export default {
     name: 'cat',
@@ -59,12 +50,12 @@ export default {
                     </span>
                 );
             }
-
-            if (isOrgMode(content)) {
-                return formatOrgMode(content);
-            } else {
-                return formatPlainText(content);
-            }
+            return (
+                <ContentRenderer
+                    content={content}
+                    type={path.split('.').pop()}
+                />
+            );
         } catch (error) {
             return (
                 <span className='error'>

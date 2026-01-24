@@ -1,6 +1,14 @@
 import { useState, useEffect, useRef } from 'react';
 import { commands } from '../commands';
 
+/**
+ * Custom hook to manage the terminal state and logic.
+ *
+ * @param {Object} props
+ * @param {Function} props.onViewChange - Callback to change the global app view (e.g. to 'game').
+ * @param {Array} [props.initialHistory] - Initial history to display.
+ * @returns {Object} All terminal state and handlers.
+ */
 export const useTerminal = ({ onViewChange, initialHistory = [] }) => {
     const [history, setHistory] = useState(initialHistory || []);
     const [command, setCommand] = useState('');
@@ -11,6 +19,9 @@ export const useTerminal = ({ onViewChange, initialHistory = [] }) => {
 
     const terminalRef = useRef(null);
     const inputRef = useRef(null);
+    // Use a ref to track if we have initialized history to prevent infinite loops
+    // caused by initialHistory being a new array on every render if passed as prop default
+    const hasInitialized = useRef(false);
 
     useEffect(() => {
         const savedTheme = localStorage.getItem('terminal-theme') || 'dracula';
@@ -18,10 +29,13 @@ export const useTerminal = ({ onViewChange, initialHistory = [] }) => {
     }, []);
 
     useEffect(() => {
-        if (initialHistory && history.length === 0) {
-            setHistory(initialHistory);
+        if (!hasInitialized.current) {
+            if (initialHistory && initialHistory.length > 0) {
+                setHistory(initialHistory);
+            }
+            hasInitialized.current = true;
         }
-    }, [initialHistory, history]);
+    }, [initialHistory]);
 
     useEffect(() => {
         scrollToBottom();
@@ -68,7 +82,7 @@ export const useTerminal = ({ onViewChange, initialHistory = [] }) => {
             if (result?.isViewChange) {
                 setHistory([...history, `${prompt} ${cmdStr}`]);
                 if (onViewChange) {
-                    onViewChange(result.newView, result.gameName);
+                    onViewChange(result.newView, result.gameName, result.props);
                 }
                 return;
             }

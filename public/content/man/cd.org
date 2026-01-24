@@ -1,0 +1,10 @@
+* CD(1)
+
+** NAME
+   cd - change the shell working directory
+
+** SYNOPSIS
+   cd [dir]
+
+** DESCRIPTION
+   Change the current directory to DIR. The default DIR is the value of the HOME shell variable.
