@@ -1,0 +1,13 @@
+* NAME
+grep - filter piped lines matching a pattern
+
+* SYNOPSIS
+[command] | grep [pattern]
+
+* DESCRIPTION
+Reads piped input line by line and prints only the lines that match the given pattern.
+The pattern is interpreted as a case-insensitive regular expression.
+
+* EXAMPLES
+cat about.md | grep React
+history | grep play

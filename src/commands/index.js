@@ -13,6 +13,11 @@ import fetchCommand from './fetch';
 import mkdirCommand from './mkdir';
 import touchCommand from './touch';
 import rmCommand from './rm';
+import echoCommand from './echo';
+import grepCommand from './grep';
+import treeCommand from './tree';
+import historyCommand from './history';
+import cowsayCommand from './cowsay';
 
 export const commands = {
     clear: clearCommand,
@@ -30,4 +35,9 @@ export const commands = {
     mkdir: mkdirCommand,
     touch: touchCommand,
     rm: rmCommand,
+    echo: echoCommand,
+    grep: grepCommand,
+    tree: treeCommand,
+    history: historyCommand,
+    cowsay: cowsayCommand,
 };

@@ -20,6 +20,11 @@ const AVAILABLE_MAN_PAGES = [
     'mkdir',
     'touch',
     'rm',
+    'echo',
+    'grep',
+    'tree',
+    'history',
+    'cowsay',
 ];
 
 export default {

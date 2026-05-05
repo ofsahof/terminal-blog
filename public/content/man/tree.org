@@ -1,0 +1,14 @@
+* NAME
+tree - show the virtual filesystem as a tree
+
+* SYNOPSIS
+tree [path]
+
+* DESCRIPTION
+Prints a directory tree starting from the given path.
+When no path is provided, the current working directory is used.
+
+* EXAMPLES
+tree
+tree ~
+tree projects

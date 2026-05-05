@@ -115,6 +115,7 @@ export const useTerminal = ({ onViewChange, initialHistory = [] }) => {
                 filesystem,
                 setFilesystem,
                 pipedInput,
+                commandHistory,
             };
 
             const rawResult = await commandToExecute.execute(segment.args, context);
