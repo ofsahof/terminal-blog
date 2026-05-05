@@ -1,8 +1,10 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, isValidElement } from 'react';
 import { commands } from '../commands';
 import { applyTheme, initializeTheme } from '../utils/themeManager';
 import { loadFilesystem, saveFilesystem } from '../utils/vfsState';
 import { resultTypes } from '../utils/commandResult';
+
+const NORMALIZED_RESULT_TYPES = new Set(Object.values(resultTypes));
 
 /**
  * Custom hook to manage the terminal state and logic.
@@ -75,11 +77,18 @@ export const useTerminal = ({ onViewChange, initialHistory = [] }) => {
         if (!result) {
             return null;
         }
-        if (result.type) {
-            return result;
-        }
         if (typeof result === 'string') {
             return { type: resultTypes.TEXT, content: result };
+        }
+        if (isValidElement(result)) {
+            return { type: resultTypes.COMPONENT, content: result };
+        }
+        if (
+            typeof result === 'object' &&
+            typeof result.type === 'string' &&
+            NORMALIZED_RESULT_TYPES.has(result.type)
+        ) {
+            return result;
         }
         return { type: resultTypes.COMPONENT, content: result };
     };

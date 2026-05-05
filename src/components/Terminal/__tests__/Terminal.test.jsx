@@ -10,7 +10,14 @@ describe('Terminal Component', () => {
         render(<Terminal />);
         // Wait for help command to execute and prompt to appear
         await waitFor(() => {
-            expect(screen.getByText('~ >')).toBeInTheDocument();
+            expect(screen.getAllByText(/~ >/)[0]).toBeInTheDocument();
+        });
+    });
+
+    it('renders help command output (JSX result)', async () => {
+        render(<Terminal />);
+        await waitFor(() => {
+            expect(screen.getByText('Available Commands:')).toBeInTheDocument();
         });
     });
 
