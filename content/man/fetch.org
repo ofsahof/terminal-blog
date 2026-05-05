@@ -1,0 +1,9 @@
+* NAME
+fetch - fetch data from a URL
+
+* SYNOPSIS
+fetch [url]
+
+* DESCRIPTION
+Sends a GET request and prints JSON pretty-formatted output when possible.
+Can also consume a piped URL from previous command output.

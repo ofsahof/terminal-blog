@@ -1,0 +1,9 @@
+* NAME
+mkdir - create a new directory in virtual filesystem
+
+* SYNOPSIS
+mkdir [directory]
+
+* DESCRIPTION
+Creates a directory under current working path.
+Changes are persisted in localStorage.

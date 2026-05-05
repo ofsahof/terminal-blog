@@ -1,0 +1,13 @@
+* NAME
+echo - print arguments or piped input to the terminal
+
+* SYNOPSIS
+echo [text...]
+
+* DESCRIPTION
+Prints the given arguments separated by spaces.
+When no arguments are passed but data is piped in, the piped value is printed.
+
+* EXAMPLES
+echo hello world
+echo Today is | grep Today

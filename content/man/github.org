@@ -1,0 +1,9 @@
+* NAME
+github - fetch latest public repositories for a GitHub user
+
+* SYNOPSIS
+github [username]
+
+* DESCRIPTION
+Lists the latest five public repositories for the given user.
+If no username is provided, the default is ofsahof.

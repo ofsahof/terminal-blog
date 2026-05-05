@@ -1,0 +1,14 @@
+* NAME
+cowsay - render an ASCII cow speaking a message
+
+* SYNOPSIS
+cowsay [message...]
+[command] | cowsay
+
+* DESCRIPTION
+Prints an ASCII cow with a speech bubble containing the given message.
+If no message is supplied, the cow uses any piped input or a default greeting.
+
+* EXAMPLES
+cowsay hello world
+echo Hi there | cowsay

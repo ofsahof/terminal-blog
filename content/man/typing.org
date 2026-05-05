@@ -1,0 +1,14 @@
+* NAME
+typing - 30 second typing speed test
+
+* SYNOPSIS
+play typing
+
+* DESCRIPTION
+Type the displayed sentence as quickly and accurately as you can.
+Words per minute and accuracy update in real time during a 30 second window.
+
+* CONTROLS
+- Type to begin
+- Ctrl/Cmd + R: pick a new sample text
+- ESC: return to terminal

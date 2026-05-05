@@ -1,0 +1,9 @@
+* NAME
+touch - create an empty file in virtual filesystem
+
+* SYNOPSIS
+touch [file]
+
+* DESCRIPTION
+Creates an empty file entry under current working path.
+Changes are persisted in localStorage.

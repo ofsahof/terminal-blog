@@ -1,0 +1,14 @@
+* NAME
+hangman - guess the hidden word letter by letter
+
+* SYNOPSIS
+play hangman
+
+* DESCRIPTION
+Each round picks a random word from a curated list.
+Guess letters by typing them. Six wrong letters end the round.
+
+* CONTROLS
+- Letter keys: guess a letter
+- R: pick a new word after the round ends
+- ESC: return to terminal

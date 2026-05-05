@@ -1,0 +1,13 @@
+* NAME
+history - show previously entered commands
+
+* SYNOPSIS
+history
+
+* DESCRIPTION
+Lists the commands you have entered during the current session, oldest first.
+Pipe to grep to find specific commands.
+
+* EXAMPLES
+history
+history | grep cat
