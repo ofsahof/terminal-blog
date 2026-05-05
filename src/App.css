@@ -311,13 +311,16 @@ pre {
 
 /* --- Game View --- */
 .game-view {
-    height: 100vh;
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     background-color: var(--bg);
     color: var(--fg);
+    padding: 16px;
+    box-sizing: border-box;
+    text-align: center;
 }
 .game-view__title {
     color: var(--green);
@@ -338,6 +341,23 @@ pre {
     margin-top: 20px;
     color: var(--gray);
     font-size: 0.9rem;
+}
+
+@media (max-width: 600px) {
+    .game-view {
+        padding: 12px;
+        justify-content: flex-start;
+    }
+    .game-view__title {
+        font-size: 1.2rem;
+    }
+    .game-view__score {
+        font-size: 0.95rem;
+    }
+    .game-view__instructions {
+        font-size: 0.8rem;
+        margin-top: 12px;
+    }
 }
 
 /* --- Responsive Fixes --- */

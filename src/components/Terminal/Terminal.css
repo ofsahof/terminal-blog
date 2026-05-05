@@ -7,3 +7,15 @@
     padding: 20px;
     box-sizing: border-box;
 }
+
+@media (max-width: 768px) {
+    .terminal-container {
+        padding: 12px;
+    }
+}
+
+@media (max-width: 480px) {
+    .terminal-container {
+        padding: 8px;
+    }
+}

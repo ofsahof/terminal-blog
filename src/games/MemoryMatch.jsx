@@ -95,8 +95,8 @@ export default function MemoryMatch({ onExit }) {
             <div
                 style={{
                     display: 'grid',
-                    gridTemplateColumns: 'repeat(4, 70px)',
-                    gridTemplateRows: 'repeat(3, 70px)',
+                    gridTemplateColumns: 'repeat(4, min(20vw, 70px))',
+                    gridTemplateRows: 'repeat(3, min(20vw, 70px))',
                     gap: '8px',
                     border: '2px solid var(--gray)',
                     padding: '10px',
@@ -108,7 +108,7 @@ export default function MemoryMatch({ onExit }) {
                         onClick={() => handleCard(card)}
                         style={{
                             fontFamily: 'inherit',
-                            fontSize: '1.6rem',
+                            fontSize: 'clamp(1.1rem, 5vw, 1.6rem)',
                             cursor: card.matched ? 'default' : 'pointer',
                             background: isVisible(card)
                                 ? 'var(--bg)'
@@ -117,6 +117,7 @@ export default function MemoryMatch({ onExit }) {
                                 ? 'var(--green)'
                                 : 'var(--fg)',
                             border: '1px solid var(--gray)',
+                            touchAction: 'manipulation',
                         }}
                     >
                         {isVisible(card) ? card.symbol : '?'}

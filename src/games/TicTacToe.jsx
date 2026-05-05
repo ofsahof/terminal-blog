@@ -133,8 +133,9 @@ export default function TicTacToe({ onExit }) {
             <div
                 style={{
                     display: 'grid',
-                    gridTemplateColumns: 'repeat(3, 80px)',
-                    gridTemplateRows: 'repeat(3, 80px)',
+                    gridTemplateColumns:
+                        'repeat(3, min(22vw, 80px))',
+                    gridTemplateRows: 'repeat(3, min(22vw, 80px))',
                     gap: '6px',
                     border: '2px solid var(--gray)',
                     padding: '6px',
@@ -149,7 +150,7 @@ export default function TicTacToe({ onExit }) {
                             onClick={() => handleCell(index)}
                             style={{
                                 fontFamily: 'inherit',
-                                fontSize: '2.4rem',
+                                fontSize: 'clamp(1.4rem, 6vw, 2.4rem)',
                                 background: 'var(--bg)',
                                 color: isWinning
                                     ? 'var(--green)'
@@ -158,6 +159,7 @@ export default function TicTacToe({ onExit }) {
                                       : 'var(--red)',
                                 border: '1px solid var(--gray)',
                                 cursor: cell ? 'default' : 'pointer',
+                                touchAction: 'manipulation',
                             }}
                         >
                             {cell || ''}
