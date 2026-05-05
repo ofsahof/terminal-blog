@@ -25,6 +25,8 @@ const AVAILABLE_MAN_PAGES = [
     'tree',
     'history',
     'cowsay',
+    'tictactoe',
+    '2048',
 ];
 
 export default {

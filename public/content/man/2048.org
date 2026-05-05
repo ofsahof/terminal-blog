@@ -1,0 +1,14 @@
+* NAME
+2048 - the classic 2048 sliding tile puzzle
+
+* SYNOPSIS
+play 2048
+
+* DESCRIPTION
+Combine matching tiles by sliding them with the arrow keys.
+Reach the 2048 tile to win. Best score is stored in localStorage.
+
+* CONTROLS
+- Arrow keys: slide tiles
+- R: reset the board
+- ESC: return to terminal

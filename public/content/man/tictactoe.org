@@ -1,0 +1,14 @@
+* NAME
+tictactoe - play tic-tac-toe against the computer
+
+* SYNOPSIS
+play tictactoe
+
+* DESCRIPTION
+A classic 3x3 tic-tac-toe game where you play X against a basic AI opponent.
+Click any empty cell to make a move. Press R to reset the board.
+
+* CONTROLS
+- Click: place your mark
+- R: reset the board
+- ESC: return to terminal
