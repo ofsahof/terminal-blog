@@ -27,6 +27,9 @@ const AVAILABLE_MAN_PAGES = [
     'cowsay',
     'tictactoe',
     '2048',
+    'hangman',
+    'memory',
+    'typing',
 ];
 
 export default {

@@ -1,0 +1,14 @@
+* NAME
+memory - flip cards to find matching pairs
+
+* SYNOPSIS
+play memory
+
+* DESCRIPTION
+A 4x3 grid of pairs. Flip two cards at a time to find matches.
+Best score (lowest move count) is stored in localStorage.
+
+* CONTROLS
+- Click: flip a card
+- R: reset the deck
+- ESC: return to terminal
