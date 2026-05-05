@@ -1,0 +1,9 @@
+* NAME
+weather - show current weather for a city
+
+* SYNOPSIS
+weather [city]
+
+* DESCRIPTION
+Fetches current weather details using wttr.in.
+Defaults to Istanbul when no city is passed.

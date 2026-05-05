@@ -1,0 +1,9 @@
+* NAME
+rm - remove a file or empty directory from virtual filesystem
+
+* SYNOPSIS
+rm [path]
+
+* DESCRIPTION
+Removes files and empty directories from VFS.
+Non-empty directories are protected.

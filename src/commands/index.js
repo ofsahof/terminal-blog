@@ -7,6 +7,12 @@ import manCommand from './man';
 import themeCommand from './theme';
 import neofetchCommand from './neofetch';
 import playCommand from './play';
+import githubCommand from './github';
+import weatherCommand from './weather';
+import fetchCommand from './fetch';
+import mkdirCommand from './mkdir';
+import touchCommand from './touch';
+import rmCommand from './rm';
 
 export const commands = {
     clear: clearCommand,
@@ -18,4 +24,10 @@ export const commands = {
     theme: themeCommand,
     neofetch: neofetchCommand,
     play: playCommand,
+    github: githubCommand,
+    weather: weatherCommand,
+    fetch: fetchCommand,
+    mkdir: mkdirCommand,
+    touch: touchCommand,
+    rm: rmCommand,
 };

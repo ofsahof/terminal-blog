@@ -14,6 +14,12 @@ const AVAILABLE_MAN_PAGES = [
     'clear',
     'theme',
     'play',
+    'github',
+    'weather',
+    'fetch',
+    'mkdir',
+    'touch',
+    'rm',
 ];
 
 export default {
