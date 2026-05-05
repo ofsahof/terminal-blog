@@ -3,27 +3,16 @@ import './TerminalHistory.css';
 
 const HistoryItem = ({ item }) => {
     if (typeof item === 'string') {
-        return (
-            <div
-                className='history__line'
-                dangerouslySetInnerHTML={{ __html: item }}
-            />
-        );
+        return <pre className='history__line history__line--text'>{item}</pre>;
     }
     if (React.isValidElement(item)) {
         return <div className='history__line'>{item}</div>;
     }
-    // Handle object structure from new hook implementation if needed later
     if (typeof item === 'object' && item.content) {
         if (item.type === 'component') {
             return <div className='history__line'>{item.content}</div>;
         }
-        return (
-            <div
-                className='history__line'
-                dangerouslySetInnerHTML={{ __html: item.content }}
-            />
-        );
+        return <pre className='history__line history__line--text'>{item.content}</pre>;
     }
 
     return null;

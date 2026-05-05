@@ -2,6 +2,7 @@ import { filesystem } from '../utils/filesystem.js';
 import { resolvePath, findEntry } from '../utils/pathHelper.js';
 import { fetchContent } from '../utils/contentFetcher.js';
 import ContentRenderer from '../components/ContentRenderer';
+import { asComponentResult, asTextResult } from '../utils/commandResult';
 
 export default {
     name: 'cat',
@@ -11,27 +12,32 @@ export default {
         const { currentPath } = context;
 
         if (args.length === 0) {
-            return 'Usage: cat [file]...';
+            if (context.pipedInput) {
+                return asTextResult(context.pipedInput);
+            }
+            return asTextResult('Usage: cat [file]...');
         }
 
         const path = args[0];
 
         const resolvedPath = resolvePath(path, currentPath);
-        const entry = findEntry(resolvedPath, filesystem);
+        const entry = findEntry(resolvedPath, context.filesystem || filesystem);
 
         if (!entry) {
-            return (
+            return asComponentResult(
                 <span className='error'>
                     cat: {path}: No such file or directory
                 </span>
             );
         }
         if (entry.type === 'directory') {
-            return <span className='error'>cat: {path}: Is a directory</span>;
+            return asComponentResult(
+                <span className='error'>cat: {path}: Is a directory</span>
+            );
         }
 
-        if (!entry.source) {
-            return (
+        if (!entry.source && typeof entry.content !== 'string') {
+            return asComponentResult(
                 <span className='error'>
                     cat: {path}: Error - File entry has no source path defined
                     in filesystem.js.
@@ -40,24 +46,27 @@ export default {
         }
 
         try {
-            const content = await fetchContent(entry.source);
+            const content =
+                typeof entry.content === 'string'
+                    ? entry.content
+                    : await fetchContent(entry.source);
 
             if (typeof content !== 'string') {
-                return (
+                return asComponentResult(
                     <span className='error'>
                         cat: {path}: Error fetching content or content is not
                         text.
                     </span>
                 );
             }
-            return (
+            return asComponentResult(
                 <ContentRenderer
                     content={content}
                     type={path.split('.').pop()}
                 />
             );
         } catch (error) {
-            return (
+            return asComponentResult(
                 <span className='error'>
                     cat: {path}: Error - {error.message}
                 </span>

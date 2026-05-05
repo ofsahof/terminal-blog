@@ -1,5 +1,6 @@
 import { filesystem } from '../utils/filesystem.js';
 import { resolvePath, findEntry } from '../utils/pathHelper.js';
+import { asPathUpdateResult, asTextResult } from '../utils/commandResult';
 
 export default {
     name: 'cd',
@@ -10,16 +11,16 @@ export default {
         const targetPath = args.length === 0 ? '~' : args[0];
 
         const newResolvedPath = resolvePath(targetPath, currentPath);
-        const entry = findEntry(newResolvedPath, filesystem);
+        const entry = findEntry(newResolvedPath, context.filesystem || filesystem);
 
         if (!entry) {
-            return `cd: ${targetPath}: No such file or directory`;
+            return asTextResult(`cd: ${targetPath}: No such file or directory`);
         }
 
         if (entry.type !== 'directory') {
-            return `cd: ${targetPath}: Not a directory`;
+            return asTextResult(`cd: ${targetPath}: Not a directory`);
         }
 
-        return { isPathUpdate: true, newPath: newResolvedPath };
+        return asPathUpdateResult(newResolvedPath);
     },
 };

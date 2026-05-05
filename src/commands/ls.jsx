@@ -1,5 +1,6 @@
 import { filesystem } from '../utils/filesystem.js';
 import { resolvePath, findEntry } from '../utils/pathHelper.js';
+import { asComponentResult, asTextResult } from '../utils/commandResult';
 
 const formatEntry = (name, type) => {
     const className =
@@ -22,15 +23,17 @@ export default {
 
         const targetPath = args.length === 0 ? '.' : args[0];
         const resolvedPath = resolvePath(targetPath, currentPath);
-        const entry = findEntry(resolvedPath, filesystem);
+        const entry = findEntry(resolvedPath, context.filesystem || filesystem);
 
         if (!entry) {
-            return `ls: ${targetPath}: No such file or directory`;
+            return asTextResult(`ls: ${targetPath}: No such file or directory`);
         }
 
         if (entry.type === 'file') {
             const name = resolvedPath.split('/').pop();
-            return <ul className='ls-output'>{formatEntry(name, 'file')}</ul>;
+            return asComponentResult(
+                <ul className='ls-output'>{formatEntry(name, 'file')}</ul>
+            );
         }
 
         if (entry.type === 'directory') {
@@ -40,11 +43,11 @@ export default {
             });
 
             if (entries.length === 0) {
-                return '';
+                return asTextResult('');
             }
-            return <ul className='ls-output'>{entries}</ul>;
+            return asComponentResult(<ul className='ls-output'>{entries}</ul>);
         }
 
-        return '';
+        return asTextResult('');
     },
 };

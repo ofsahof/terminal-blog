@@ -11,3 +11,9 @@
     line-height: 1.5;
     word-break: break-word;
 }
+
+.history__line--text {
+    white-space: pre-wrap;
+    font-family: inherit;
+    margin: 0 0 4px;
+}
